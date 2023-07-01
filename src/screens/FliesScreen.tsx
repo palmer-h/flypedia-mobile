@@ -1,6 +1,8 @@
-import React from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList, ActivityIndicator, Text } from 'react-native';
+import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexFliesQuery } from '~/services/flyApi/flyApi';
+import { Fly } from '~/services/flyApi/flyApi.types';
 
 const FliesScreen: React.FC = () => {
   const { data, error, isLoading } = useIndexFliesQuery({
@@ -8,22 +10,36 @@ const FliesScreen: React.FC = () => {
     pageSize: 20,
   });
 
-  if (data) {
-    return (
-      <View>
-        {data.results.map(x => (
-          <Text key={x.id}>{x.name}</Text>
-        ))}
-      </View>
-    );
+  const renderItem = useCallback(
+    ({ item }: { item: Fly }) => (
+      <OrbCardListItem
+        id={item.id}
+        title={item.name}
+        subtitle={item.types.map(x => x.name).join(', ')}
+        desc={item.description}
+      />
+    ),
+    [],
+  );
+
+  const keyExtractor = (item: Fly): string => String(item.id);
+
+  if (error) {
+    return <Text>Error</Text>;
   }
 
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
-  if (error) {
-    return <Text>Error</Text>;
+  if (data) {
+    return (
+      <FlatList
+        data={data.results}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+      />
+    );
   }
 };
 

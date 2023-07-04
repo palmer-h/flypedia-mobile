@@ -5,7 +5,7 @@ export type Props = {
   title: string;
   subtitle?: string;
   desc?: string;
-  orbImgSrc: ImageSourcePropType;
+  orbImgSrc?: ImageSourcePropType;
   style?: ViewStyle | Array<ViewStyle>;
   onPress?: (id: string | number) => void;
 };

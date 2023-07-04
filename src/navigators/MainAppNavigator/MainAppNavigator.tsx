@@ -3,14 +3,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabsNavigator from '~/navigators/BottomTabsNavigator/BottomTabsNavigator';
 import FlyDetailsScreen from '~/screens/FlyDetailsScreen/FlyDetailsScreen';
 import ImitateeDetailsScreen from '~/screens/ImitateeDetailsScreen/ImitateeDetailsScreen';
-import { MainAppNavigatorScreenParams } from './types';
+import { MainAppNavigatorScreenParams } from '~/navigators/MainAppNavigator/types';
 
 const Stack = createStackNavigator<MainAppNavigatorScreenParams>();
 
 const MainAppNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={BottomTabsNavigator} />
+      <Stack.Screen
+        name="Home"
+        component={BottomTabsNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Fly Details"
         component={FlyDetailsScreen}

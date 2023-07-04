@@ -1,11 +1,49 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { Props } from '~/screens/ImitateeDetailsScreen/types';
+import { useGetImitateeByIdQuery } from '~/services/flyApi/flyApi';
 
 const ImitateeDetailsScreen: React.FC<Props> = props => {
-  const id = props.route.params.id;
+  const { data, error, isLoading } = useGetImitateeByIdQuery(
+    props.route.params.id,
+  );
 
-  return <Text>{id}</Text>;
+  if (isLoading) {
+    return <Text>Loading</Text>;
+  }
+
+  if (error) {
+    return <Text>Error</Text>;
+  }
+
+  if (data) {
+    return (
+      <View>
+        <Text>{data.name}</Text>
+        <Text>{data.description}</Text>
+        {data.flies ? (
+          <View>
+            <Text>Imitate with the following flies:</Text>
+            {data.flies.map(x => (
+              <OrbCardListItem
+                id={x.id}
+                key={x.id}
+                title={x.name}
+                desc={x.description}
+                onPress={() =>
+                  props.navigation.navigate('Fly Details', {
+                    id: x.id,
+                    name: x.name,
+                  })
+                }
+              />
+            ))}
+          </View>
+        ) : null}
+      </View>
+    );
+  }
 };
 
 export default ImitateeDetailsScreen;

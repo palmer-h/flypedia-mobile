@@ -12,7 +12,7 @@ const ImageOrb: React.FC<Props> = props => (
       props.shadow ? styles.containerShadow : null,
     ]}>
     <Image
-      source={props.imgSrc}
+      source={props.imgSrc || require('~/assets/flyPlaceholder.png')}
       width={undefined}
       height={undefined}
       style={styles.image}

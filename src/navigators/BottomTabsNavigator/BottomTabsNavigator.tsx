@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FliesScreen from '~/screens/FliesScreen';
-import ImitateesScreen from '~/screens/ImitateesScreen';
+import FliesScreen from '~/screens/FliesScreen/FliesScreen';
+import ImitateesScreen from '~/screens/ImitateesScreen/ImitateesScreen';
 
 const Tab = createBottomTabNavigator();
 

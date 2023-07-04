@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, FlatList, Text } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexImitateesQuery } from '~/services/flyApi/flyApi';
-import { Imitatee } from '~/services/flyApi/flyApi.types';
+import type { Imitatee } from '~/services/flyApi/flyApi.types';
+import type { Props } from '~/screens/ImitateesScreen/types';
 
-const ImitateesScreen: React.FC = () => {
-  const navigation = useNavigation();
-
+const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const { data, error, isLoading } = useIndexImitateesQuery({
     pageNumber: 1,
     pageSize: 20,
@@ -20,17 +18,18 @@ const ImitateesScreen: React.FC = () => {
         title={item.name}
         desc={item.description}
         orbImgSrc={0}
-        onPress={handlePressImitatee}
+        onPress={() =>
+          navigation.navigate('Imitatee Details', {
+            id: item.id,
+            name: item.name,
+          })
+        }
       />
     ),
     [],
   );
 
   const keyExtractor = (item: Imitatee): string => String(item.id);
-
-  const handlePressImitatee = (): void => {
-    navigation.navigate('Imitatee Details');
-  };
 
   if (error) {
     return <Text>Error</Text>;

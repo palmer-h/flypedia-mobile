@@ -17,6 +17,7 @@ const FliesScreen: React.FC = () => {
         title={item.name}
         subtitle={item.types.map(x => x.name).join(', ')}
         desc={item.description}
+        orbImgSrc={require('~/assets/flyPlaceholder.png')}
       />
     ),
     [],

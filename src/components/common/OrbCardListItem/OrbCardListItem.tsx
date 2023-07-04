@@ -4,6 +4,7 @@ import { Props } from '~/components/common/OrbCardListItem/types';
 import { subtitleMedium, titleMedium, bodyMedium } from '~/theme/typography';
 import styles from '~/components/common/OrbCardListItem/styles';
 import ImageOrb from '../ImageOrb/ImageOrb';
+import colors from '~/theme/colors';
 
 const OrbCardListItem: React.FC<Props> = props => {
   return (
@@ -12,10 +13,10 @@ const OrbCardListItem: React.FC<Props> = props => {
         styles.container,
         props.style,
         {
-          backgroundColor: pressed ? 'gray' : 'white',
+          backgroundColor: pressed ? colors.pressed : colors.background,
         },
       ]}>
-      <ImageOrb size={50} />
+      <ImageOrb size={50} imgSrc={props.orbImgSrc} shadow />
       <View style={styles.contentContainer}>
         <Text style={titleMedium}>{props.title}</Text>
         {props.subtitle ? (

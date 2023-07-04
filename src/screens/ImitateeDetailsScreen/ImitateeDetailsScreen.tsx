@@ -20,7 +20,6 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
   if (data) {
     return (
       <View>
-        <Text>{data.name}</Text>
         <Text>{data.description}</Text>
         {data.flies ? (
           <View>

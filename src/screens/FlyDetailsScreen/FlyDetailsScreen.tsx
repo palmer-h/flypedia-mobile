@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { Props } from '~/screens/FlyDetailsScreen/types';
 import { useGetFlyByIdQuery } from '~/services/flyApi/flyApi';
+import theme from '~/theme';
 
 const FlyDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
@@ -18,11 +19,13 @@ const FlyDetailsScreen: React.FC<Props> = props => {
   if (data) {
     return (
       <View>
-        <Text>{data.name}</Text>
-        {data.types.map(x => (
-          <Text>{x.name}</Text>
-        ))}
-        <Text>{data.description}</Text>
+        <View
+          style={{ paddingHorizontal: theme.spacing.screenHorizontalPadding }}>
+          {data.types.map(x => (
+            <Text>{x.name}</Text>
+          ))}
+          <Text>{data.description}</Text>
+        </View>
         {data.imitatees ? (
           <View>
             <Text>This fly can imitate:</Text>

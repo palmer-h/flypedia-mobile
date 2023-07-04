@@ -7,6 +7,10 @@ import ImageOrb from '../ImageOrb/ImageOrb';
 import colors from '~/theme/colors';
 
 const OrbCardListItem: React.FC<Props> = props => {
+  const handlePress = (): void => {
+    props.onPress?.(props.id);
+  };
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -15,8 +19,8 @@ const OrbCardListItem: React.FC<Props> = props => {
         {
           backgroundColor: pressed ? colors.pressed : colors.background,
         },
-      ]}>
-      <ImageOrb size={50} imgSrc={props.orbImgSrc} shadow />
+      ]}
+      onPress={handlePress}>
       <View style={styles.contentContainer}>
         <Text style={titleMedium}>{props.title}</Text>
         {props.subtitle ? (
@@ -24,6 +28,7 @@ const OrbCardListItem: React.FC<Props> = props => {
         ) : null}
         <Text style={[bodyMedium, styles.descriptionText]}>{props.desc}</Text>
       </View>
+      <ImageOrb size={50} imgSrc={props.orbImgSrc} shadow />
     </Pressable>
   );
 };

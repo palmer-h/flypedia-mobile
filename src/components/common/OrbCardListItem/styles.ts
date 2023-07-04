@@ -5,11 +5,12 @@ export default StyleSheet.create({
     borderTopWidth: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   contentContainer: {
     paddingVertical: 16,
-    marginLeft: 16,
+    paddingRight: 20,
   },
   descriptionText: {
     marginTop: 8,

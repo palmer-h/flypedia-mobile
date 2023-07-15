@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
-import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
 import { useGetFlyByIdQuery } from '~/services/flyApi/flyApi';
 import theme from '~/theme';

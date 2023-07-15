@@ -3,7 +3,8 @@ import theme from '~/theme';
 
 export default StyleSheet.create({
   container: {
-    borderTopWidth: 0.5,
+    borderTopWidth: 0.2,
+    borderTopColor: 'grey',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

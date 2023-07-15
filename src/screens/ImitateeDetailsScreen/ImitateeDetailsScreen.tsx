@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
-import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import type { Props } from '~/screens/ImitateeDetailsScreen/types';
 import { useGetImitateeByIdQuery } from '~/services/flyApi/flyApi';
 import theme from '~/theme';

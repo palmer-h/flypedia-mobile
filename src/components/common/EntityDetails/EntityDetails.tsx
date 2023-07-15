@@ -1,17 +1,18 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import type { Props } from '~/components/common/EntityDetails/types';
+import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
 import theme from '~/theme';
 import styles from '~/components/common/EntityDetails/styles';
 import ImageOrb from '~/components/common/ImageOrb/ImageOrb';
 import Button from '~/components/common/Button/Button';
-import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
+import { ORB_IMAGE_SIZE } from '~/components/common/EntityDetails/constants';
 
 const EntityDetails: React.FC<Props> = props => {
   return (
     <View style={props.style}>
       <View style={styles.mainDetailsContainer}>
-        <ImageOrb size={132} style={styles.imageOrb} shadow={true} />
+        <ImageOrb size={ORB_IMAGE_SIZE} style={styles.imageOrb} shadow={true} />
         <Text style={theme.typography.titleLarge}>{props.title}</Text>
         {props.subtitle ? (
           <Text style={[theme.typography.subtitleMedium, styles.subtitle]}>

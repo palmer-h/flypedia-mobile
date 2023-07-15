@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList, ActivityIndicator, Text } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexFliesQuery } from '~/services/flyApi/flyApi';
@@ -6,10 +6,19 @@ import type { Fly } from '~/services/flyApi/flyApi.types';
 import type { Props } from '~/screens/FliesScreen/types';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
-  const { data, error, isLoading } = useIndexFliesQuery({
-    pageNumber: 1,
-    pageSize: 20,
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const { data, error, isLoading, isFetching } = useIndexFliesQuery({
+    pageNumber,
+    pageSize: 10,
   });
+
+  const handleListEndReached = (): void => {
+    if (!data || pageNumber >= data.metadata.totalPages) {
+      return;
+    }
+    setPageNumber(pageNumber + 1);
+  };
 
   const renderItem = useCallback(
     ({ item }: { item: Fly }) => (
@@ -24,7 +33,7 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         }
       />
     ),
-    [],
+    [navigation],
   );
 
   const keyExtractor = (item: Fly): string => String(item.id);
@@ -43,6 +52,10 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        onEndReached={handleListEndReached}
+        ListFooterComponent={
+          isFetching ? () => <ActivityIndicator /> : undefined
+        }
       />
     );
   }

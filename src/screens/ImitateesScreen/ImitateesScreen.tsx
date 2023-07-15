@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, Text } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexImitateesQuery } from '~/services/flyApi/flyApi';
@@ -6,10 +6,23 @@ import type { Imitatee } from '~/services/flyApi/flyApi.types';
 import type { Props } from '~/screens/ImitateesScreen/types';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
   const { data, error, isLoading } = useIndexImitateesQuery({
-    pageNumber: 1,
+    pageNumber,
     pageSize: 20,
   });
+
+  const handleListEndReached = (): void => {
+    if (!data || pageNumber >= data.metadata.totalPages) {
+      return;
+    }
+    setPageNumber(pageNumber + 1);
+  };
+
+  const handlePressListItem = (id: string | number): void => {
+    navigation.navigate('Imitatee Details', { id: Number(id) });
+  };
 
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
@@ -18,15 +31,10 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         title={item.name}
         desc={item.description}
         orbImgSrc={0}
-        onPress={() =>
-          navigation.navigate('Imitatee Details', {
-            id: item.id,
-            name: item.name,
-          })
-        }
+        onPress={handlePressListItem}
       />
     ),
-    [],
+    [navigation],
   );
 
   const keyExtractor = (item: Imitatee): string => String(item.id);
@@ -45,6 +53,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        onEndReached={handleListEndReached}
       />
     );
   }

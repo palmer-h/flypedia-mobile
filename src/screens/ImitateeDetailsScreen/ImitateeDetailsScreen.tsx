@@ -33,7 +33,6 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
                 onPress={() =>
                   props.navigation.navigate('Fly Details', {
                     id: x.id,
-                    name: x.name,
                   })
                 }
               />

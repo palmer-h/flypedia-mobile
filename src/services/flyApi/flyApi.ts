@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   Fly,
   Imitatee,
-  Metadata,
+  PaginatedEntityIndexParams,
   PaginatedEntityResponse,
 } from '~/services/flyApi/flyApi.types';
 
@@ -11,18 +11,40 @@ export const flyApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.1.238:3000/api/v1/' }),
   endpoints: builder => ({
     /* Flies */
-    indexFlies: builder.query<PaginatedEntityResponse<Fly>, Metadata>({
+    indexFlies: builder.query<
+      PaginatedEntityResponse<Fly>,
+      PaginatedEntityIndexParams
+    >({
       query: config =>
         `flies?pageNumber=${config.pageNumber}&pageSize=${config.pageSize}`,
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newData) => {
+        currentCache.results.push(...newData.results);
+        currentCache.metadata = newData.metadata;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     getFlyById: builder.query<Fly, number>({
       query: id => `flies/${id}`,
     }),
 
     /* Imitatees */
-    indexImitatees: builder.query<PaginatedEntityResponse<Imitatee>, Metadata>({
+    indexImitatees: builder.query<
+      PaginatedEntityResponse<Imitatee>,
+      PaginatedEntityIndexParams
+    >({
       query: config =>
         `imitatees?pageNumber=${config.pageNumber}&pageSize=${config.pageSize}`,
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newData) => {
+        currentCache.results.push(...newData.results);
+        currentCache.metadata = newData.metadata;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     getImitateeById: builder.query<Imitatee, number>({
       query: id => `imitatees/${id}`,

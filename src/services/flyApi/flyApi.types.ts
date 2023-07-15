@@ -21,6 +21,13 @@ export type Imitatee = {
 export type Metadata = {
   pageNumber: number;
   pageSize: number;
+  totalPages: number;
+  totalItems: number;
+};
+
+export type PaginatedEntityIndexParams = {
+  pageNumber: Metadata['pageNumber'];
+  pageSize: Metadata['pageSize'];
 };
 
 export type PaginatedEntityResponse<T> = {

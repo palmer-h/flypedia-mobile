@@ -15,20 +15,8 @@ const MainAppNavigator = () => {
         component={BottomTabsNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Fly Details"
-        component={FlyDetailsScreen}
-        options={({ route }) => ({
-          headerTitle: String(route.params.name),
-        })}
-      />
-      <Stack.Screen
-        name="Imitatee Details"
-        component={ImitateeDetailsScreen}
-        options={({ route }) => ({
-          headerTitle: String(route.params.name),
-        })}
-      />
+      <Stack.Screen name="Fly Details" component={FlyDetailsScreen} />
+      <Stack.Screen name="Imitatee Details" component={ImitateeDetailsScreen} />
     </Stack.Navigator>
   );
 };

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import theme from '~/theme';
 
 export default StyleSheet.create({
   container: {
@@ -6,11 +7,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    paddingHorizontal: theme.spacing.screenPadding,
   },
   contentContainer: {
-    paddingVertical: 16,
-    paddingRight: 20,
+    paddingVertical: theme.spacing.screenPadding,
+    paddingRight: theme.spacing.screenPadding,
   },
   descriptionText: {
     marginTop: 8,

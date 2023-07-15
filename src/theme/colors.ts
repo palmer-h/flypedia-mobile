@@ -1,5 +1,5 @@
 export default {
-  primary: '',
+  primary: 'green',
   onPrimary: '',
   secondary: '',
   onSecondary: '',

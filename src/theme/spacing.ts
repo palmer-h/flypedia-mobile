@@ -1,3 +1,3 @@
 export default {
-  screenHorizontalPadding: 20,
+  screenPadding: 16,
 };

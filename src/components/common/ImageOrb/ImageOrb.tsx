@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Props } from '~/components/common/ImageOrb/types';
+import type { Props } from '~/components/common/ImageOrb/types';
 import styles from '~/components/common/ImageOrb/styles';
 
 const ImageOrb: React.FC<Props> = props => (

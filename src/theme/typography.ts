@@ -7,11 +7,17 @@ const base: TextStyle = {
 
 export const titleLarge: TextStyle = {
   ...base,
-  fontSize: 18,
+  fontSize: 22,
   fontWeight: '600',
 };
 
 export const titleMedium: TextStyle = {
+  ...base,
+  fontSize: 18,
+  fontWeight: '600',
+};
+
+export const titleSmall: TextStyle = {
   ...base,
   fontSize: 16,
   fontWeight: '600',
@@ -29,7 +35,17 @@ export const subtitleMedium: TextStyle = {
   fontWeight: '500',
 };
 
+export const bodyLarge: TextStyle = {
+  ...base,
+  fontSize: 18,
+  fontWeight: '400',
+};
 export const bodyMedium: TextStyle = {
+  ...base,
+  fontSize: 16,
+  fontWeight: '400',
+};
+export const bodySmall: TextStyle = {
   ...base,
   fontSize: 14,
   fontWeight: '400',

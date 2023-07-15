@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Props } from '~/components/common/OrbCardListItem/types';
+import type { Props } from '~/components/common/OrbCardListItem/types';
 import theme from '~/theme';
 import styles from '~/components/common/OrbCardListItem/styles';
 import ImageOrb from '../ImageOrb/ImageOrb';

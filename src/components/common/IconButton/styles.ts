@@ -5,4 +5,10 @@ export default StyleSheet.create({
     borderRadius: 100,
     padding: 8,
   },
+  containerShadow: {
+    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
 });

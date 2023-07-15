@@ -19,7 +19,7 @@ const ShareButton: React.FC<Props> = props => {
   return (
     <IconButton
       icon={faShareNodes}
-      size={props.size || 32}
+      size={props.size || 28}
       style={props.style}
       onPress={handleShare}
     />

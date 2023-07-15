@@ -17,12 +17,7 @@ const HeaderLeft: React.FC<NavigationProp<MainAppNavigatorScreenParams>> = ({
 }) => {
   return (
     <View style={{ marginLeft: theme.spacing.screenPadding }}>
-      <IconButton
-        icon={faChevronLeft}
-        size={24}
-        onPress={navigation.goBack}
-        color={theme.colors.text}
-      />
+      <IconButton icon={faChevronLeft} size={20} onPress={navigation.goBack} />
     </View>
   );
 };

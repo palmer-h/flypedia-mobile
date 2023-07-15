@@ -17,16 +17,17 @@ const IconButton: React.FC<Props> = props => (
       styles.container,
       {
         backgroundColor: pressed
-          ? theme.colors.pressed
-          : theme.colors.background,
+          ? props.pressedColor || theme.colors.pressedPrimary
+          : props.backgroundColor || theme.colors.primary,
       },
+      props.shadow ? styles.containerShadow : null,
       props.style,
     ]}
     onPress={!props.disabled ? props.onPress : undefined}>
     <FontAwesomeIcon
       icon={props.icon}
       size={props.size}
-      color={props.color ? String(props.color) : theme.colors.primary}
+      color={props.iconColor || theme.colors.onPrimary}
     />
   </Pressable>
 );

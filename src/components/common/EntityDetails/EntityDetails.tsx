@@ -5,10 +5,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import theme from '~/theme';
 import styles from '~/components/common/EntityDetails/styles';
 import ImageOrb from '~/components/common/ImageOrb/ImageOrb';
-import Button from '~/components/common/Button/Button';
 import { ORB_IMAGE_SIZE } from '~/components/common/EntityDetails/constants';
-import ShareButton from '../ShareButton/ShareButton';
-import IconButton from '../IconButton/IconButton';
+import ShareButton from '~/components/common/ShareButton/ShareButton';
+import IconButton from '~/components/common/IconButton/IconButton';
 
 const EntityDetails: React.FC<Props> = props => {
   return (
@@ -24,7 +23,7 @@ const EntityDetails: React.FC<Props> = props => {
       </View>
       <View style={styles.actionButtonsContainer}>
         <IconButton
-          size={24}
+          size={20}
           icon={faHeart}
           style={styles.actionButton}
           onPress={() => null}

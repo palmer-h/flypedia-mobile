@@ -1,6 +1,7 @@
 export default {
   primary: 'green',
-  onPrimary: '',
+  onPrimary: 'white',
+  pressedPrimary: 'lightgreen',
   secondary: '',
   onSecondary: '',
   text: 'black',

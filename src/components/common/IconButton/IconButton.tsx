@@ -20,6 +20,7 @@ const IconButton: React.FC<Props> = props => (
           ? theme.colors.pressed
           : theme.colors.background,
       },
+      props.style,
     ]}
     onPress={!props.disabled ? props.onPress : undefined}>
     <FontAwesomeIcon

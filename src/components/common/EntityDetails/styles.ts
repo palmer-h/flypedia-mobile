@@ -11,13 +11,13 @@ export default StyleSheet.create({
     marginTop: 4,
   },
   actionButtonsContainer: {
-    marginVertical: 8,
+    marginVertical: 12,
     flexDirection: 'row',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
   actionButton: {
-    marginHorizontal: 12,
+    marginHorizontal: 8,
   },
   descriptionContainer: {
     marginVertical: 12,

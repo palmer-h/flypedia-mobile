@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import type { Props } from '~/components/common/EntityDetails/types';
-import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import theme from '~/theme';
 import styles from '~/components/common/EntityDetails/styles';
 import ImageOrb from '~/components/common/ImageOrb/ImageOrb';
 import Button from '~/components/common/Button/Button';
 import { ORB_IMAGE_SIZE } from '~/components/common/EntityDetails/constants';
+import ShareButton from '../ShareButton/ShareButton';
+import IconButton from '../IconButton/IconButton';
 
 const EntityDetails: React.FC<Props> = props => {
   return (
@@ -21,18 +23,13 @@ const EntityDetails: React.FC<Props> = props => {
         ) : null}
       </View>
       <View style={styles.actionButtonsContainer}>
-        <Button
-          title="Favourite"
-          color={theme.colors.primary}
+        <IconButton
+          size={24}
           icon={faHeart}
           style={styles.actionButton}
+          onPress={() => null}
         />
-        <Button
-          title="Share"
-          color={theme.colors.primary}
-          icon={faShare}
-          style={styles.actionButton}
-        />
+        <ShareButton size={24} style={styles.actionButton} />
       </View>
       {props.description ? (
         <View style={styles.descriptionContainer}>

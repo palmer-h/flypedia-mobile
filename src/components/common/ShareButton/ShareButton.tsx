@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Share } from 'react-native';
-import IconButton from '~/components/common/IconButton/IconButton';
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import IconButton from '~/components/common/IconButton/IconButton';
 import type { Props } from '~/components/common/ShareButton/types';
 
 const ShareButton: React.FC<Props> = props => {
@@ -21,6 +21,8 @@ const ShareButton: React.FC<Props> = props => {
       icon={faShareNodes}
       size={props.size || 28}
       style={props.style}
+      accessibilityLabel="share button"
+      accessibilityHint="press to share"
       onPress={handleShare}
     />
   );

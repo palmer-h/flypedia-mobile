@@ -28,9 +28,9 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         subtitle={item.types.map(x => x.name).join(', ')}
         desc={item.description}
         orbImgSrc={require('~/assets/flyPlaceholder.png')}
-        onPress={() =>
-          navigation.navigate('Fly Details', { id: item.id, name: item.name })
-        }
+        accessibilityLabel="fly card"
+        accessibilityHint="press to view fly details"
+        onPress={() => navigation.navigate('Fly Details', { id: item.id })}
       />
     ),
     [navigation],

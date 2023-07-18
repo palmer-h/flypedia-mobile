@@ -20,6 +20,8 @@ const OrbCardListItem: React.FC<Props> = props => {
           backgroundColor: pressed ? colors.pressed : colors.background,
         },
       ]}
+      accessibilityLabel={props.accessibilityLabel}
+      accessibilityHint={props.accessibilityHint}
       onPress={handlePress}>
       <View style={styles.contentContainer}>
         <Text style={theme.typography.titleMedium}>{props.title}</Text>

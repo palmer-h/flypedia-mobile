@@ -20,10 +20,6 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
     setPageNumber(pageNumber + 1);
   };
 
-  const handlePressListItem = (id: string | number): void => {
-    navigation.navigate('Imitatee Details', { id: Number(id) });
-  };
-
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
       <OrbCardListItem
@@ -31,7 +27,9 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         title={item.name}
         desc={item.description}
         orbImgSrc={0}
-        onPress={handlePressListItem}
+        accessibilityLabel="imitatee card"
+        accessibilityHint="press to view imitatee details"
+        onPress={() => navigation.navigate('Imitatee Details', { id: item.id })}
       />
     ),
     [navigation],

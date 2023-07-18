@@ -7,5 +7,7 @@ export type Props = {
   desc?: string;
   orbImgSrc?: ImageSourcePropType;
   style?: ViewStyle | Array<ViewStyle>;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
   onPress?: (id: string | number) => void;
 };

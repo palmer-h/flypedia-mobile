@@ -3,11 +3,22 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FliesScreen from '~/screens/FliesScreen/FliesScreen';
 import ImitateesScreen from '~/screens/ImitateesScreen/ImitateesScreen';
 import theme from '~/theme';
-import { BottomTabsNavigatorScreenParams } from '~/navigators/BottomTabsNavigator/types';
+import {
+  BottomTabsNavigatorScreenParams,
+  TabBarIconProps,
+} from '~/navigators/BottomTabsNavigator/types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBug, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
+
+const TabBarIcon: React.FC<TabBarIconProps> = props => (
+  <FontAwesomeIcon
+    icon={props.icon}
+    color={props.focused ? theme.colors.primary : theme.colors.pressedPrimary}
+    size={28}
+  />
+);
 
 const BottomTabsNavigator = () => {
   return (
@@ -20,32 +31,30 @@ const BottomTabsNavigator = () => {
           color: theme.colors.onPrimary,
         },
         tabBarStyle: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.background,
           height: 100,
+          borderTopWidth: 2,
+          borderTopColor: theme.colors.primary,
         },
         tabBarLabelStyle: {
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: '600',
         },
         tabBarInactiveTintColor: theme.colors.pressedPrimary,
-        tabBarActiveTintColor: theme.colors.onPrimary,
+        tabBarActiveTintColor: theme.colors.primary,
       }}>
       <Tab.Screen
         name="Flies"
         component={FliesScreen}
         options={{
-          tabBarIcon: () => (
-            <FontAwesomeIcon icon={faHeart} color={theme.colors.onPrimary} size={32} />
-          ),
+          tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faHeart }),
         }}
       />
       <Tab.Screen
         name="Imitatees"
         component={ImitateesScreen}
         options={{
-          tabBarIcon: () => (
-            <FontAwesomeIcon icon={faBug} color={theme.colors.onPrimary} size={32} />
-          ),
+          tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
         }}
       />
     </Tab.Navigator>

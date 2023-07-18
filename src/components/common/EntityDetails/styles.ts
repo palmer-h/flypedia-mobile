@@ -10,14 +10,10 @@ export default StyleSheet.create({
   subtitle: {
     marginTop: 4,
   },
-  actionButtonsContainer: {
+  favouriteButton: {
     marginVertical: 12,
-    flexDirection: 'row',
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  actionButton: {
-    marginHorizontal: 8,
   },
   descriptionContainer: {
     marginVertical: 12,

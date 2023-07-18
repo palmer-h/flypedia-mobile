@@ -1,12 +1,12 @@
 export default {
-  primary: 'green',
+  primary: '#647687',
   onPrimary: 'white',
-  pressedPrimary: 'lightgreen',
-  secondary: '',
+  pressedPrimary: '#BBC7CE',
+  secondary: '#8fba8f',
   onSecondary: '',
   text: 'black',
   background: '#FEFCFF',
   disabled: '',
-  pressed: '#EDEADE',
+  pressed: '#EBEBEB',
   error: '',
 };

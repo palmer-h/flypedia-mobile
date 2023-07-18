@@ -27,6 +27,12 @@ const MainAppNavigator = () => {
     <Stack.Navigator
       screenOptions={({ navigation }) => ({
         headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerStyle: {
+          backgroundColor: theme.colors.primary,
+        },
+        headerTitleStyle: {
+          color: theme.colors.onPrimary,
+        },
       })}>
       <Stack.Screen
         name="Home"

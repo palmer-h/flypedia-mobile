@@ -16,15 +16,19 @@ const EntityCarousel: React.FC<Props> = props => (
       {props.items.map(x => (
         <Pressable
           key={x.id}
-          style={styles.itemContainer}
+          style={({ pressed }) => [
+            styles.itemContainer,
+            {
+              backgroundColor: pressed
+                ? theme.colors.pressed
+                : theme.colors.background,
+            },
+          ]}
           onPress={() => props.onPressItem(x.id)}>
           <ImageOrb size={64} shadow={true} />
           <Text style={[theme.typography.subtitleMedium, styles.itemTitle]}>
             {x.title}
           </Text>
-          {x.subtitle ? (
-            <Text style={theme.typography.subtitleMedium}>{x.subtitle}</Text>
-          ) : null}
         </Pressable>
       ))}
     </ScrollView>

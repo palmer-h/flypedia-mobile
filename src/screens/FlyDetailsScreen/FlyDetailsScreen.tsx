@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import EntityCarousel from '~/components/common/EntityCarousel/EntityCarousel';
+import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
@@ -10,7 +11,7 @@ import theme from '~/theme';
 const FlyDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
 
-  const imitateeCarouselItems =
+  const imitateeCarouselItems: Array<EntityCarouselItem> =
     data?.imitatees?.map(x => ({
       id: x.id,
       title: x.name,
@@ -30,7 +31,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
 
   if (data) {
     return (
-      <View style={{ padding: theme.spacing.screenPadding }}>
+      <View style={styles.container}>
         <EntityDetails
           title={data.name}
           subtitle={data?.types.map(x => x.name).join(', ')}

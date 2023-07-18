@@ -12,12 +12,18 @@ import theme from '~/theme';
 
 const Stack = createStackNavigator<MainAppNavigatorScreenParams>();
 
-const HeaderLeft: React.FC<NavigationProp<MainAppNavigatorScreenParams>> = ({
-  navigation,
-}) => {
+const HeaderLeft: React.FC<{
+  navigation: NavigationProp<MainAppNavigatorScreenParams>;
+}> = ({ navigation }) => {
   return (
     <View style={{ marginLeft: theme.spacing.screenPadding }}>
-      <IconButton icon={faChevronLeft} size={20} onPress={navigation.goBack} />
+      <IconButton
+        icon={faChevronLeft}
+        size={20}
+        accessibilityLabel="go back button"
+        accessibilityHint="press to go back to the previous screen"
+        onPress={navigation.goBack}
+      />
     </View>
   );
 };
@@ -26,7 +32,7 @@ const MainAppNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={({ navigation }) => ({
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerLeft: () => HeaderLeft({ navigation }),
         headerStyle: {
           backgroundColor: theme.colors.primary,
         },

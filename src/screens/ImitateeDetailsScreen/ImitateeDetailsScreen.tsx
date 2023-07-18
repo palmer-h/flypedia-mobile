@@ -3,8 +3,7 @@ import { Text, View } from 'react-native';
 import EntityCarousel from '~/components/common/EntityCarousel/EntityCarousel';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import type { Props } from '~/screens/ImitateeDetailsScreen/types';
-import { useGetImitateeByIdQuery } from '~/services/flyApi/flyApi';
-import theme from '~/theme';
+import { useGetImitateeByIdQuery } from '~/services/flyApi';
 import styles from '~/screens/ImitateeDetailsScreen/styles';
 import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 
@@ -49,6 +48,8 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
       </View>
     );
   }
+
+  return null;
 };
 
 export default ImitateeDetailsScreen;

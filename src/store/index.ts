@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { flyApi } from '~/services/flyApi/flyApi';
+import { flyApi } from '~/services/flyApi';
 
 const reducer = combineReducers({
   [flyApi.reducerPath]: flyApi.reducer,

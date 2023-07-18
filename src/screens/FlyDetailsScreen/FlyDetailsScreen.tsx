@@ -5,8 +5,7 @@ import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
-import { useGetFlyByIdQuery } from '~/services/flyApi/flyApi';
-import theme from '~/theme';
+import { useGetFlyByIdQuery } from '~/services/flyApi';
 
 const FlyDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
@@ -48,6 +47,8 @@ const FlyDetailsScreen: React.FC<Props> = props => {
       </View>
     );
   }
+
+  return null;
 };
 
 export default FlyDetailsScreen;

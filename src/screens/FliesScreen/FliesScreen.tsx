@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList, ActivityIndicator, Text } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
-import { useIndexFliesQuery } from '~/services/flyApi/flyApi';
-import type { Fly } from '~/services/flyApi/flyApi.types';
+import { useIndexFliesQuery } from '~/services/flyApi';
+import type { Fly } from '~/services/flyApi/types';
 import type { Props } from '~/screens/FliesScreen/types';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
@@ -53,12 +53,12 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         onEndReached={handleListEndReached}
-        ListFooterComponent={
-          isFetching ? () => <ActivityIndicator /> : undefined
-        }
+        ListFooterComponent={isFetching ? ActivityIndicator : undefined}
       />
     );
   }
+
+  return null;
 };
 
 export default FliesScreen;

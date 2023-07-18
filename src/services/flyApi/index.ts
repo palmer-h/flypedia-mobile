@@ -4,7 +4,7 @@ import {
   Imitatee,
   PaginatedEntityIndexParams,
   PaginatedEntityResponse,
-} from '~/services/flyApi/flyApi.types';
+} from '~/services/flyApi/types';
 
 export const flyApi = createApi({
   reducerPath: 'flyApi',

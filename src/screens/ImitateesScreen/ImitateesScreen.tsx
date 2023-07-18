@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, Text } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
-import { useIndexImitateesQuery } from '~/services/flyApi/flyApi';
-import type { Imitatee } from '~/services/flyApi/flyApi.types';
+import { useIndexImitateesQuery } from '~/services/flyApi';
+import type { Imitatee } from '~/services/flyApi/types';
 import type { Props } from '~/screens/ImitateesScreen/types';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
@@ -55,6 +55,8 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
       />
     );
   }
+
+  return null;
 };
 
 export default ImitateesScreen;

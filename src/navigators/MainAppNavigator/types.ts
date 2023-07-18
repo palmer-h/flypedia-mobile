@@ -1,4 +1,4 @@
-import { Fly, Imitatee } from '~/services/flyApi/flyApi.types';
+import { Fly, Imitatee } from '~/services/flyApi/types';
 
 export type MainAppNavigatorScreenParams = {
   Home: undefined;

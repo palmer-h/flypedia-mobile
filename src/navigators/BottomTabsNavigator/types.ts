@@ -3,6 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export type BottomTabsNavigatorScreenParams = {
   Flies: undefined;
   Imitatees: undefined;
+  Favourites: undefined;
 };
 
 export type TabBarIconProps = {

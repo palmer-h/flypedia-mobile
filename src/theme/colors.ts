@@ -1,6 +1,6 @@
 export default {
   primary: '#647687',
-  onPrimary: 'white',
+  onPrimary: '#FEFCFF',
   pressedPrimary: '#BBC7CE',
   secondary: '#8fba8f',
   onSecondary: '',
@@ -9,4 +9,7 @@ export default {
   disabled: '',
   pressed: '#EBEBEB',
   error: '',
+  onError: '#FEFCFF',
+  success: 'green',
+  onSuccess: '#FEFCFF',
 };

@@ -29,7 +29,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         id={item.externalId}
         title={item.name}
         desc={item.description}
-        orbImgSrc={0}
+        orbImgSrc={require('~/assets/imitateePlaceholder.png')}
         accessibilityLabel="imitatee card"
         accessibilityHint="press to view imitatee details"
         onPress={() =>

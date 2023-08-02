@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import EntityCarousel from '~/components/common/EntityCarousel/EntityCarousel';
 import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
+import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
+import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
 import { useGetFlyByIdQuery } from '~/services/flyApi';
@@ -10,9 +12,11 @@ import { useGetFlyByIdQuery } from '~/services/flyApi';
 const FlyDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
 
+  console.log(props.route.params);
+
   const imitateeCarouselItems: Array<EntityCarouselItem> =
     data?.imitatees?.map(x => ({
-      id: x.id,
+      id: x.externalId,
       title: x.name,
     })) || [];
 
@@ -20,12 +24,16 @@ const FlyDetailsScreen: React.FC<Props> = props => {
     props.navigation.navigate('Imitatee Details', { id: Number(id) });
   };
 
-  if (isLoading) {
-    return <Text>Loading</Text>;
+  if (error) {
+    return 'status' in error ? (
+      <ErrorSplash status={error.status} message={error.data as string} />
+    ) : (
+      <ErrorSplash message={error.message} />
+    );
   }
 
-  if (error) {
-    return <Text>Error</Text>;
+  if (isLoading) {
+    return <LoadingSplash />;
   }
 
   if (data) {

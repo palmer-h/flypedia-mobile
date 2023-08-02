@@ -8,15 +8,14 @@ import {
   TabBarIconProps,
 } from '~/navigators/BottomTabsNavigator/types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBug, faHeart } from '@fortawesome/free-solid-svg-icons';
-import FavouriteFliesScreen from '~/screens/FavouriteFliesScreen.tsx/FavouriteFliesScreen';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
 
 const TabBarIcon: React.FC<TabBarIconProps> = props => (
   <FontAwesomeIcon
     icon={props.icon}
-    color={props.focused ? theme.colors.primary : theme.colors.pressedPrimary}
+    color={props.focused ? theme.colors.pressedPrimary : theme.colors.primary}
     size={28}
   />
 );
@@ -41,16 +40,9 @@ const BottomTabsNavigator = () => {
           fontSize: 14,
           fontWeight: '600',
         },
-        tabBarInactiveTintColor: theme.colors.pressedPrimary,
-        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.primary,
+        tabBarActiveTintColor: theme.colors.pressedPrimary,
       }}>
-      <Tab.Screen
-        name="Favourites"
-        component={FavouriteFliesScreen}
-        options={{
-          tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faHeart }),
-        }}
-      />
       <Tab.Screen
         name="Flies"
         component={FliesScreen}

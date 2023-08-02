@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexImitateesQuery } from '~/services/flyApi';
 import type { Imitatee } from '~/services/flyApi/types';
 import type { Props } from '~/screens/ImitateesScreen/types';
+import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
+import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
+import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -23,26 +26,37 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
       <OrbCardListItem
-        id={item.id}
+        id={item.externalId}
         title={item.name}
         desc={item.description}
         orbImgSrc={0}
         accessibilityLabel="imitatee card"
         accessibilityHint="press to view imitatee details"
-        onPress={() => navigation.navigate('Imitatee Details', { id: item.id })}
+        onPress={() =>
+          navigation.navigate('Imitatee Details', { id: item.externalId })
+        }
       />
     ),
     [navigation],
   );
 
-  const keyExtractor = (item: Imitatee): string => String(item.id);
+  const ListEmptyStateComponent = useCallback(
+    () => <ListEmptyComponent message="No imitatees found" />,
+    [],
+  );
+
+  const keyExtractor = (item: Imitatee): string => String(item.externalId);
 
   if (error) {
-    return <Text>Error</Text>;
+    return 'status' in error ? (
+      <ErrorSplash status={error.status} message={error.data as string} />
+    ) : (
+      <ErrorSplash message={error.message} />
+    );
   }
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <LoadingSplash />;
   }
 
   if (data) {
@@ -51,6 +65,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        ListEmptyComponent={ListEmptyStateComponent}
         onEndReached={handleListEndReached}
       />
     );

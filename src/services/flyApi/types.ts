@@ -1,5 +1,5 @@
 export type Fly = {
-  id: number;
+  externalId: number;
   name: string;
   description: string;
   types: Array<FlyType>;
@@ -7,12 +7,12 @@ export type Fly = {
 };
 
 export type FlyType = {
-  id: number;
+  externalId: number;
   name: string;
 };
 
 export type Imitatee = {
-  id: number;
+  externalId: number;
   name: string;
   description: string;
   flies?: Array<Fly>;
@@ -28,6 +28,7 @@ export type Metadata = {
 export type PaginatedEntityIndexParams = {
   pageNumber: Metadata['pageNumber'];
   pageSize: Metadata['pageSize'];
+  ids?: Array<number | string>;
 };
 
 export type PaginatedEntityResponse<T> = {

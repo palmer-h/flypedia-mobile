@@ -3,9 +3,9 @@ import { Fly, Imitatee } from '~/services/flyApi/types';
 export type MainAppNavigatorScreenParams = {
   Home: undefined;
   'Fly Details': {
-    id: Fly['id'];
+    id: Fly['externalId'];
   };
   'Imitatee Details': {
-    id: Imitatee['id'];
+    id: Imitatee['externalId'];
   };
 };

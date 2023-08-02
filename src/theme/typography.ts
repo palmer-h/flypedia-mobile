@@ -5,6 +5,12 @@ const base: TextStyle = {
   color: colors.text,
 };
 
+export const titleExtraLarge: TextStyle = {
+  ...base,
+  fontSize: 26,
+  fontWeight: '600',
+};
+
 export const titleLarge: TextStyle = {
   ...base,
   fontSize: 22,

@@ -11,7 +11,7 @@ import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const { data, error, isLoading } = useIndexImitateesQuery({
+  const { data, error, isLoading, isFetching } = useIndexImitateesQuery({
     pageNumber,
     pageSize: 20,
   });
@@ -23,18 +23,20 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
     setPageNumber(pageNumber + 1);
   };
 
+  const handleRefresh = (): void => {
+    setPageNumber(1);
+  };
+
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
       <OrbCardListItem
-        id={item.externalId}
+        id={item.id}
         title={item.name}
         desc={item.description}
         orbImgSrc={require('~/assets/imitateePlaceholder.png')}
         accessibilityLabel="imitatee card"
         accessibilityHint="press to view imitatee details"
-        onPress={() =>
-          navigation.navigate('Imitatee Details', { id: item.externalId })
-        }
+        onPress={() => navigation.navigate('Imitatee Details', { id: item.id })}
       />
     ),
     [navigation],
@@ -45,7 +47,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
     [],
   );
 
-  const keyExtractor = (item: Imitatee): string => String(item.externalId);
+  const keyExtractor = (item: Imitatee): string => String(item.id);
 
   if (error) {
     return 'status' in error ? (
@@ -65,6 +67,8 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        refreshing={isFetching}
+        onRefresh={handleRefresh}
         ListEmptyComponent={ListEmptyStateComponent}
         onEndReached={handleListEndReached}
       />

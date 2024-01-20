@@ -1,5 +1,5 @@
 export type Fly = {
-  externalId: number;
+  id: string;
   name: string;
   description: string;
   types: Array<FlyType>;
@@ -7,12 +7,12 @@ export type Fly = {
 };
 
 export type FlyType = {
-  externalId: number;
+  id: string;
   name: string;
 };
 
 export type Imitatee = {
-  externalId: number;
+  id: string;
   name: string;
   description: string;
   flies?: Array<Fly>;

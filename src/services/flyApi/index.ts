@@ -26,7 +26,7 @@ export const flyApi = createApi({
         return currentArg !== previousArg;
       },
     }),
-    getFlyById: builder.query<Fly, number>({
+    getFlyById: builder.query<Fly, string>({
       query: id => `flies/${id}`,
     }),
 
@@ -46,7 +46,7 @@ export const flyApi = createApi({
         return currentArg !== previousArg;
       },
     }),
-    getImitateeById: builder.query<Imitatee, number>({
+    getImitateeById: builder.query<Imitatee, string>({
       query: id => `imitatees/${id}`,
     }),
   }),

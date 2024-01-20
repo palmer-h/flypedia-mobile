@@ -7,6 +7,7 @@ import type { Props } from '~/screens/FliesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
+import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -17,28 +18,28 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const handleListEndReached = (): void => {
-    if (!data || pageNumber >= data.metadata.totalPages) {
+    console.log(isFetching);
+    if (isFetching || !data || pageNumber >= data.metadata.totalPages) {
       return;
     }
     setPageNumber(pageNumber + 1);
   };
 
-  const renderItem = useCallback(
-    ({ item }: { item: Fly }) => (
-      <OrbCardListItem
-        id={item.externalId}
-        title={item.name}
-        subtitle={item.types.map(x => x.name).join(', ')}
-        desc={item.description}
-        orbImgSrc={require('~/assets/flyPlaceholder.png')}
-        accessibilityLabel="fly card"
-        accessibilityHint="press to view fly details"
-        onPress={() =>
-          navigation.navigate('Fly Details', { id: item.externalId })
-        }
-      />
-    ),
-    [navigation],
+  const handleRefresh = (): void => {
+    setPageNumber(1);
+  };
+
+  const renderItem = ({ item }: { item: Fly }) => (
+    <OrbCardListItem
+      id={item.id}
+      title={item.name}
+      subtitle={item.types.map(x => x.name).join(', ')}
+      desc={item.description}
+      orbImgSrc={require('~/assets/flyPlaceholder.png')}
+      accessibilityLabel="fly card"
+      accessibilityHint="press to view fly details"
+      onPress={() => navigation.navigate('Fly Details', { id: item.id })}
+    />
   );
 
   const ListEmptyStateComponent = useCallback(
@@ -46,7 +47,7 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
     [],
   );
 
-  const keyExtractor = (item: Fly): string => String(item.externalId);
+  const keyExtractor = (item: Fly): string => String(item.id);
 
   if (error) {
     return 'status' in error ? (
@@ -65,8 +66,15 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
       <FlatList
         data={data.results}
         keyExtractor={keyExtractor}
+        refreshing={isLoading}
+        onRefresh={handleRefresh}
         renderItem={renderItem}
         onEndReached={handleListEndReached}
+        getItemLayout={(_data, index) => ({
+          length: CONTAINER_HEIGHT,
+          offset: 0,
+          index,
+        })}
         ListEmptyComponent={ListEmptyStateComponent}
         ListFooterComponent={isFetching ? ActivityIndicator : undefined}
       />

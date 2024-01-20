@@ -24,7 +24,7 @@ const EntityCarousel: React.FC<Props> = props => (
                 : theme.colors.background,
             },
           ]}
-          onPress={() => props.onPressItem(x.id)}>
+          onPress={() => props.onPressItem(String(x.id))}>
           <ImageOrb size={64} shadow={true} />
           <Text style={[theme.typography.subtitleMedium, styles.itemTitle]}>
             {x.title}

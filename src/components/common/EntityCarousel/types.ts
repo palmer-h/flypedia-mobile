@@ -4,7 +4,7 @@ export type Props = {
   title?: string;
   items: Array<EntityCarouselItem>;
   style?: ViewStyle | Array<ViewStyle>;
-  onPressItem: (id: string | number) => void;
+  onPressItem: (id: string) => void;
 };
 
 export type EntityCarouselItem = {

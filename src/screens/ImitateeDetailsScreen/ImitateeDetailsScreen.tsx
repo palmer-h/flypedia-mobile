@@ -16,12 +16,12 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
 
   const flyCarouselItems: Array<EntityCarouselItem> =
     data?.flies?.map(x => ({
-      id: x.externalId,
+      id: x.id,
       title: x.name,
     })) || [];
 
-  const handlePressFlyCarouselItem = (id: string | number): void => {
-    props.navigation.navigate('Fly Details', { id: Number(id) });
+  const handlePressFlyCarouselItem = (id: string): void => {
+    props.navigation.navigate('Fly Details', { id });
   };
 
   if (error) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import type { Props } from '~/components/common/OrbCardListItem/types';
 import theme from '~/theme';
@@ -6,7 +6,7 @@ import styles from '~/components/common/OrbCardListItem/styles';
 import ImageOrb from '../ImageOrb/ImageOrb';
 import colors from '~/theme/colors';
 
-const OrbCardListItem: React.FC<Props> = props => (
+const OrbCardListItem: React.FC<Props> = memo(props => (
   <Pressable
     style={({ pressed }) => [
       styles.container,
@@ -23,12 +23,14 @@ const OrbCardListItem: React.FC<Props> = props => (
       {props.subtitle ? (
         <Text style={theme.typography.subtitleMedium}>{props.subtitle}</Text>
       ) : null}
-      <Text style={[theme.typography.bodyMedium, styles.descriptionText]}>
+      <Text
+        style={[theme.typography.bodySmall, styles.descriptionText]}
+        numberOfLines={2}>
         {props.desc}
       </Text>
     </View>
     <ImageOrb size={50} imgSrc={props.orbImgSrc} shadow />
   </Pressable>
-);
+));
 
 export default OrbCardListItem;

@@ -8,6 +8,7 @@ import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmpty
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
+import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -38,7 +39,9 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
       orbImgSrc={require('~/assets/flyPlaceholder.png')}
       accessibilityLabel="fly card"
       accessibilityHint="press to view fly details"
-      onPress={() => navigation.navigate('Fly Details', { id: item.id })}
+      onPress={() =>
+        navigation.navigate(MainAppNavigatorScreen.FLY_DETAILS, { id: item.id })
+      }
     />
   );
 

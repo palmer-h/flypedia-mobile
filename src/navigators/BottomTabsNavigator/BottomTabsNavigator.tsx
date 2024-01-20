@@ -9,6 +9,7 @@ import {
 } from '~/navigators/BottomTabsNavigator/types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { BottomTabsNavigatorScreen } from '~/navigators/BottomTabsNavigator/constants';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
 
@@ -44,14 +45,14 @@ const BottomTabsNavigator = () => {
         tabBarActiveTintColor: theme.colors.pressedPrimary,
       }}>
       <Tab.Screen
-        name="Flies"
+        name={BottomTabsNavigatorScreen.FLIES}
         component={FliesScreen}
         options={{
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
         }}
       />
       <Tab.Screen
-        name="Imitatees"
+        name={BottomTabsNavigatorScreen.IMITATEES}
         component={ImitateesScreen}
         options={{
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),

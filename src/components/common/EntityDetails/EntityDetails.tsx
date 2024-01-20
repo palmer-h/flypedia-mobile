@@ -10,12 +10,14 @@ const EntityDetails: React.FC<Props> = props => (
   <View style={props.style}>
     <View style={styles.mainDetailsContainer}>
       <ImageOrb size={ORB_IMAGE_SIZE} style={styles.imageOrb} shadow={true} />
-      <Text style={theme.typography.titleLarge}>{props.title}</Text>
-      {props.subtitle ? (
-        <Text style={[theme.typography.subtitleMedium, styles.subtitle]}>
-          {props.subtitle}
-        </Text>
-      ) : null}
+      <View style={styles.mainDetailsTitleContainer}>
+        <Text style={theme.typography.titleLarge}>{props.title}</Text>
+        {props.subtitle ? (
+          <Text style={[theme.typography.subtitleMedium, styles.subtitle]}>
+            {props.subtitle}
+          </Text>
+        ) : null}
+      </View>
     </View>
     {props.description ? (
       <View style={styles.descriptionContainer}>

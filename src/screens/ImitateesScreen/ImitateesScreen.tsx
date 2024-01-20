@@ -7,6 +7,7 @@ import type { Props } from '~/screens/ImitateesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
+import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -36,7 +37,11 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         orbImgSrc={require('~/assets/imitateePlaceholder.png')}
         accessibilityLabel="imitatee card"
         accessibilityHint="press to view imitatee details"
-        onPress={() => navigation.navigate('Imitatee Details', { id: item.id })}
+        onPress={() =>
+          navigation.navigate(MainAppNavigatorScreen.IMITATEE_DETAILS, {
+            id: item.id,
+          })
+        }
       />
     ),
     [navigation],

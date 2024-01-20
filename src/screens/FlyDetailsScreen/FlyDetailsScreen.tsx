@@ -5,6 +5,7 @@ import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
+import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
 import { useGetFlyByIdQuery } from '~/services/flyApi';
@@ -21,7 +22,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
     })) || [];
 
   const handlePressImitateeCarouselItem = (id: string): void => {
-    props.navigation.navigate('Imitatee Details', { id });
+    props.navigation.navigate(MainAppNavigatorScreen.IMITATEE_DETAILS, { id });
   };
 
   if (error) {
@@ -47,7 +48,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
         />
         {data.imitatees?.length ? (
           <EntityCarousel
-            title="Imitatees"
+            title="Imitates"
             items={imitateeCarouselItems}
             onPressItem={handlePressImitateeCarouselItem}
           />

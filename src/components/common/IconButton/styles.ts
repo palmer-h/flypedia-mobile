@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     borderRadius: 100,
-    padding: 8,
+    padding: 6,
   },
   containerShadow: {
     elevation: 4,

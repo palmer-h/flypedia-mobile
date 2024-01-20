@@ -4,5 +4,5 @@ import { MainAppNavigatorScreenParams } from '~/navigators/MainAppNavigator/type
 
 export type Props = NativeStackScreenProps<
   MainAppNavigatorScreenParams,
-  MainAppNavigatorScreen.IMITATEE_DETAILS
+  MainAppNavigatorScreen.LOGIN
 >;

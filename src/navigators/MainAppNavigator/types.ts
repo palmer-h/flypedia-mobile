@@ -1,11 +1,13 @@
 import { Fly, Imitatee } from '~/services/flyApi/types';
+import { MainAppNavigatorScreen } from './constants';
 
 export type MainAppNavigatorScreenParams = {
   Home: undefined;
-  'Fly Details': {
+  Login: undefined;
+  [MainAppNavigatorScreen.FLY_DETAILS]: {
     id: Fly['id'];
   };
-  'Imitatee Details': {
+  [MainAppNavigatorScreen.IMITATEE_DETAILS]: {
     id: Imitatee['id'];
   };
 };

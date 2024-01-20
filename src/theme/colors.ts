@@ -8,7 +8,7 @@ export default {
   background: '#FEFCFF',
   disabled: '',
   pressed: '#EBEBEB',
-  error: '',
+  error: '#D2042D',
   onError: '#FEFCFF',
   success: 'green',
   onSuccess: '#FEFCFF',

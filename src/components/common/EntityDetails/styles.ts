@@ -2,7 +2,13 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   mainDetailsContainer: {
+    flexDirection: 'row',
+  },
+  mainDetailsTitleContainer: {
     alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    flex: 1,
   },
   imageOrb: {
     marginBottom: 12,

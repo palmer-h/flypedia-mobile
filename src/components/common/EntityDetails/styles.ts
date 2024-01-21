@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import theme from '~/theme';
 
 export default StyleSheet.create({
   mainDetailsContainer: {
@@ -23,6 +24,10 @@ export default StyleSheet.create({
   },
   descriptionContainer: {
     marginVertical: 12,
+  },
+  titleText: {
+    ...theme.typography.titleLarge,
+    color: theme.colors.primary,
   },
   descriptionTitleText: {
     marginBottom: 8,

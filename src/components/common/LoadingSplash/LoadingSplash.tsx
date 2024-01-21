@@ -8,6 +8,7 @@ const LoadingSplash: React.FC = () => (
     <ActivityIndicator
       color={theme.colors.primary}
       style={styles.loadingIndicator}
+      size={32}
     />
   </View>
 );

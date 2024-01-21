@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
-import { useIndexFliesQuery } from '~/services/flyApi';
-import type { Fly } from '~/services/flyApi/types';
+import { useIndexFliesQuery } from '~/services/flypediaApi';
+import type { Fly } from '~/services/flypediaApi/types';
 import type { Props } from '~/screens/FliesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
@@ -19,15 +19,10 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const handleListEndReached = (): void => {
-    console.log(isFetching);
     if (isFetching || !data || pageNumber >= data.metadata.totalPages) {
       return;
     }
     setPageNumber(pageNumber + 1);
-  };
-
-  const handleRefresh = (): void => {
-    setPageNumber(1);
   };
 
   const renderItem = ({ item }: { item: Fly }) => (
@@ -69,8 +64,6 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
       <FlatList
         data={data.results}
         keyExtractor={keyExtractor}
-        refreshing={isLoading}
-        onRefresh={handleRefresh}
         renderItem={renderItem}
         onEndReached={handleListEndReached}
         getItemLayout={(_data, index) => ({

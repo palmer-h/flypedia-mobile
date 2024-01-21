@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabsNavigator from '~/navigators/BottomTabsNavigator/BottomTabsNavigator';
@@ -16,6 +16,10 @@ import {
   LOGIN_BUTTON_ICON_SIZE,
   MainAppNavigatorScreen,
 } from '~/navigators/MainAppNavigator/constants';
+import * as keychain from '~/services/keychain';
+import { useReduxDispatch } from '~/hooks/redux';
+import { logout, setIsLoggedIn } from '~/store/slices/user';
+import UserProfileScreen from '~/screens/UserProfileScreen/UserProfileScreen';
 
 const Stack = createStackNavigator<MainAppNavigatorScreenParams>();
 
@@ -42,6 +46,16 @@ const HeaderLeft: React.FC<{
 const HeaderRight: React.FC<{
   navigation: NavigationProp<MainAppNavigatorScreenParams>;
 }> = ({ navigation }) => {
+  const isLoggedIn = useReduxSelector(state => state.user.id);
+
+  const handleIconPress = (): void => {
+    navigation.navigate(
+      !isLoggedIn
+        ? MainAppNavigatorScreen.LOGIN
+        : MainAppNavigatorScreen.USER_PROFILE,
+    );
+  };
+
   return (
     <View style={{ marginRight: theme.spacing.screenPadding }}>
       <IconButton
@@ -49,7 +63,7 @@ const HeaderRight: React.FC<{
         size={LOGIN_BUTTON_ICON_SIZE}
         accessibilityLabel="login button"
         accessibilityHint="press to go to the login screen"
-        onPress={() => navigation.navigate(MainAppNavigatorScreen.LOGIN)}
+        onPress={handleIconPress}
       />
     </View>
   );
@@ -58,14 +72,30 @@ const HeaderRight: React.FC<{
 const MainAppNavigator = () => {
   const isLoggedIn = useReduxSelector(state => state.user.id);
 
+  const dispatch = useReduxDispatch();
+
+  const checkLoggedInStatus = useCallback(async (): Promise<void> => {
+    const accessToken = await keychain.getSecureValue('accessToken');
+    const refreshToken = await keychain.getSecureValue('refreshToken');
+
+    if (!accessToken || !refreshToken) {
+      await dispatch(logout());
+      return;
+    }
+    dispatch(setIsLoggedIn(true));
+  }, [dispatch]);
+
+  useEffect((): void => {
+    checkLoggedInStatus();
+  }, [checkLoggedInStatus]);
+
   return (
     <Stack.Navigator
       screenOptions={({ navigation, route }) => ({
         headerLeft: () => HeaderLeft({ navigation }),
         headerRight: () => HeaderRight({ navigation }),
-        headerTitle: !navigation.canGoBack() ? '' : route.name,
+        headerTitle: !navigation.canGoBack() ? 'Flypedia' : route.name,
         headerStyle: {
-          height: !navigation.canGoBack() ? 42 : 52,
           backgroundColor: theme.colors.primary,
         },
         headerTitleStyle: {
@@ -92,7 +122,15 @@ const MainAppNavigator = () => {
           }}
           component={LoginScreen}
         />
-      ) : undefined}
+      ) : (
+        <Stack.Screen
+          name={MainAppNavigatorScreen.USER_PROFILE}
+          options={{
+            headerRight: undefined,
+          }}
+          component={UserProfileScreen}
+        />
+      )}
     </Stack.Navigator>
   );
 };

@@ -1,6 +1,7 @@
 export enum MainAppNavigatorScreen {
   HOME = 'Home',
   LOGIN = 'Login',
+  USER_PROFILE = 'Profile',
   FLY_DETAILS = 'Fly',
   IMITATEE_DETAILS = 'Imitatee',
 }

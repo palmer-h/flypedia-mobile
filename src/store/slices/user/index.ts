@@ -1,17 +1,47 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '~/store';
+import {
+  type PayloadAction,
+  createSlice,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+import type { LoginResponse } from '~/services/flypediaApi/types';
 import { INITIAL_USER_SLICE_STATE } from '~/store/slices/user/constants';
+import * as keychain from '~/services/keychain';
 
 export const userSlice = createSlice({
   name: 'user',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState: INITIAL_USER_SLICE_STATE,
-  reducers: {},
+  reducers: {
+    setUser: (state, action: PayloadAction<LoginResponse>) => {
+      console.log(action.payload);
+      state.id = action.payload.userId;
+      state.email = action.payload.email;
+    },
+    setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
+    },
+    reset: () => INITIAL_USER_SLICE_STATE,
+  },
 });
 
-export const {} = userSlice.actions;
+export const logout = createAsyncThunk<void>(
+  'user/onLogin',
+  async (_data, thunkApi) => {
+    await keychain.removeSecureValue('accessToken');
+    await keychain.removeSecureValue('refreshToken');
+    thunkApi.dispatch(reset());
+  },
+);
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectId = (state: RootState) => state.user.id;
+export const onLogin = createAsyncThunk<void, LoginResponse>(
+  'user/onLogin',
+  async (data, thunkApi) => {
+    await keychain.setSecureValue('accessToken', data.accessToken);
+    await keychain.setSecureValue('refreshToken', data.refreshToken);
+    thunkApi.dispatch(setUser(data));
+    thunkApi.dispatch(setIsLoggedIn(true));
+  },
+);
+
+export const { setUser, setIsLoggedIn, reset } = userSlice.actions;
 
 export default userSlice.reducer;

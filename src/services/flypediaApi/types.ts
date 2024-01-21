@@ -18,6 +18,13 @@ export type Imitatee = {
   flies?: Array<Fly>;
 };
 
+export type LoginResponse = {
+  userId: string;
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
 export type Metadata = {
   pageNumber: number;
   pageSize: number;

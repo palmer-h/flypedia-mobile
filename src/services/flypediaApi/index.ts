@@ -4,12 +4,35 @@ import {
   Imitatee,
   PaginatedEntityIndexParams,
   PaginatedEntityResponse,
-} from '~/services/flyApi/types';
+} from '~/services/flypediaApi/types';
+import * as keychain from '~/services/keychain';
 
 export const flyApi = createApi({
   reducerPath: 'flyApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.1.238:3000/api/v1/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://192.168.1.238:3000/api/v1/',
+    prepareHeaders: async headers => {
+      const token: string | false = await keychain.getSecureValue(
+        'accessToken',
+      );
+
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
   endpoints: builder => ({
+    /* Auth */
+    login: builder.mutation<any, { email: string; password: string }>({
+      query: body => ({
+        url: 'auth/authenticate',
+        method: 'POST',
+        body,
+      }),
+    }),
+
     /* Flies */
     indexFlies: builder.query<
       PaginatedEntityResponse<Fly>,
@@ -53,6 +76,7 @@ export const flyApi = createApi({
 });
 
 export const {
+  useLoginMutation,
   useIndexFliesQuery,
   useGetFlyByIdQuery,
   useIndexImitateesQuery,

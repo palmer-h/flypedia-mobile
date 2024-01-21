@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
 const TabBarIcon: React.FC<TabBarIconProps> = props => (
   <FontAwesomeIcon
     icon={props.icon}
-    color={props.focused ? theme.colors.pressedPrimary : theme.colors.primary}
+    color={props.focused ? theme.colors.disabled : theme.colors.primary}
     size={28}
   />
 );
@@ -25,24 +25,20 @@ const BottomTabsNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: theme.colors.primary,
-        },
-        headerTitleStyle: {
-          color: theme.colors.onPrimary,
-        },
+        headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.colors.background,
-          height: 100,
+          height: 72,
           borderTopWidth: 2,
           borderTopColor: theme.colors.primary,
         },
         tabBarLabelStyle: {
           fontSize: 14,
           fontWeight: '600',
+          paddingBottom: 4,
         },
         tabBarInactiveTintColor: theme.colors.primary,
-        tabBarActiveTintColor: theme.colors.pressedPrimary,
+        tabBarActiveTintColor: theme.colors.disabled,
       }}>
       <Tab.Screen
         name={BottomTabsNavigatorScreen.FLIES}

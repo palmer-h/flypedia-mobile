@@ -11,9 +11,9 @@ const EntityDetails: React.FC<Props> = props => (
     <View style={styles.mainDetailsContainer}>
       <ImageOrb size={ORB_IMAGE_SIZE} style={styles.imageOrb} shadow={true} />
       <View style={styles.mainDetailsTitleContainer}>
-        <Text style={theme.typography.titleLarge}>{props.title}</Text>
+        <Text style={styles.titleText}>{props.title}</Text>
         {props.subtitle ? (
-          <Text style={[theme.typography.subtitleMedium, styles.subtitle]}>
+          <Text style={[theme.typography.subtitleLarge, styles.subtitle]}>
             {props.subtitle}
           </Text>
         ) : null}
@@ -21,10 +21,6 @@ const EntityDetails: React.FC<Props> = props => (
     </View>
     {props.description ? (
       <View style={styles.descriptionContainer}>
-        <Text
-          style={[theme.typography.titleSmall, styles.descriptionTitleText]}>
-          Description
-        </Text>
         <Text style={theme.typography.bodyMedium}>{props.description}</Text>
       </View>
     ) : null}

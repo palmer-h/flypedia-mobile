@@ -4,21 +4,64 @@ import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Props } from '~/screens/LoginScreen/types';
 import styles from './styles';
+import { useLoginMutation } from '~/services/flypediaApi';
+import Button from '~/components/common/Button/Button';
+import { useReduxDispatch } from '~/hooks/redux';
+import { onLogin } from '~/store/slices/user';
 
-const LoginScreen: React.FC<Props> = () => {
+const LoginScreen: React.FC<Props> = ({ navigation }) => {
+  const dispatch = useReduxDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
+
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+  const [formError, setFormError] = useState<string>('');
 
   const handleChangeEmailField = (val: string): void => {
-    setEmailError('Yo!');
+    setEmailError('');
     setEmail(val);
   };
 
   const handleChangePasswordField = (val: string): void => {
     setPasswordError('');
     setPassword(val);
+  };
+
+  const validateForm = (): boolean => {
+    let isError: boolean = false;
+
+    if (!email) {
+      setEmailError('Email is required');
+      isError = true;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      isError = true;
+    }
+
+    return !isError;
+  };
+
+  const handleSubmitForm = async (): Promise<void> => {
+    setFormError('');
+
+    if (!validateForm()) {
+      return;
+    }
+
+    const res = (await login({ email, password })) as any;
+    if (res.error) {
+      setFormError(res.error.data.message);
+      return;
+    }
+    dispatch(onLogin(res.data));
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
   };
 
   return (
@@ -43,6 +86,15 @@ const LoginScreen: React.FC<Props> = () => {
             placeholder="Password"
           />
           <Text style={styles.inputError}>{passwordError}</Text>
+        </View>
+        <Text style={styles.formError}>{formError}</Text>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Login"
+            onPress={handleSubmitForm}
+            accessibilityLabel="login button"
+            disabled={isLoading}
+          />
         </View>
       </SafeAreaView>
     </View>

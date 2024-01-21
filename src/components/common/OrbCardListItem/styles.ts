@@ -5,8 +5,8 @@ import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants'
 export default StyleSheet.create({
   container: {
     height: CONTAINER_HEIGHT,
-    borderTopWidth: 0.2,
-    borderTopColor: 'grey',
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

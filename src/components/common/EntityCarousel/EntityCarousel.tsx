@@ -7,11 +7,7 @@ import styles from '~/components/common/EntityCarousel/styles';
 
 const EntityCarousel: React.FC<Props> = props => (
   <View style={props.style}>
-    {props.title ? (
-      <Text style={[theme.typography.titleSmall, styles.title]}>
-        {props.title}
-      </Text>
-    ) : null}
+    {props.title ? <Text style={styles.title}>{props.title}</Text> : null}
     <ScrollView horizontal={true}>
       {props.items.map(x => (
         <Pressable

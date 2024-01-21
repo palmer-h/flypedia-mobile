@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import EntityCarousel from '~/components/common/EntityCarousel/EntityCarousel';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import type { Props } from '~/screens/ImitateeDetailsScreen/types';
-import { useGetImitateeByIdQuery } from '~/services/flyApi';
+import { useGetImitateeByIdQuery } from '~/services/flypediaApi';
 import styles from '~/screens/ImitateeDetailsScreen/styles';
 import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';

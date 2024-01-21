@@ -8,12 +8,10 @@ import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
-import { useGetFlyByIdQuery } from '~/services/flyApi';
+import { useGetFlyByIdQuery } from '~/services/flypediaApi';
 
 const FlyDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
-
-  console.log(props.route.params);
 
   const imitateeCarouselItems: Array<EntityCarouselItem> =
     data?.imitatees?.map(x => ({

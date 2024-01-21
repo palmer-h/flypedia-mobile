@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
-import { useIndexImitateesQuery } from '~/services/flyApi';
-import type { Imitatee } from '~/services/flyApi/types';
+import { useIndexImitateesQuery } from '~/services/flypediaApi';
+import type { Imitatee } from '~/services/flypediaApi/types';
 import type { Props } from '~/screens/ImitateesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';

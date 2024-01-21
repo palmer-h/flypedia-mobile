@@ -8,7 +8,7 @@ export default StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   inputContainer: {
-    marginVertical: 8,
+    marginVertical: 12,
   },
   nativeInput: {
     borderWidth: 2,
@@ -21,5 +21,13 @@ export default StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 4,
     color: theme.colors.error,
+  },
+  formError: {
+    minHeight: 12,
+    marginBottom: 12,
+    color: theme.colors.error,
+  },
+  buttonContainer: {
+    marginTop: 8,
   },
 });

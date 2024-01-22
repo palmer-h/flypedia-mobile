@@ -12,7 +12,6 @@ export const userSlice = createSlice({
   initialState: INITIAL_USER_SLICE_STATE,
   reducers: {
     setUser: (state, action: PayloadAction<LoginResponse>) => {
-      console.log(action.payload);
       state.id = action.payload.userId;
       state.email = action.payload.email;
     },
@@ -24,7 +23,7 @@ export const userSlice = createSlice({
 });
 
 export const logout = createAsyncThunk<void>(
-  'user/onLogin',
+  'user/logout',
   async (_data, thunkApi) => {
     await keychain.removeSecureValue('accessToken');
     await keychain.removeSecureValue('refreshToken');

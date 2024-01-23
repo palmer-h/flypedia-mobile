@@ -5,4 +5,8 @@ export type Props = {
   subtitle?: string;
   description?: string;
   style?: ViewStyle | Array<ViewStyle>;
+  isFavourite?: boolean;
+  isLoading?: boolean;
+  showFavouriteToggle?: boolean;
+  onToggleIsFavourite?: (isFavourite: boolean) => void;
 };

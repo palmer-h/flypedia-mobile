@@ -1,14 +1,14 @@
+import { AppScreen } from '~/core/constants';
 import { Fly, Imitatee } from '~/services/flypediaApi/types';
-import { MainAppNavigatorScreen } from './constants';
 
 export type MainAppNavigatorScreenParams = {
-  [MainAppNavigatorScreen.HOME]: undefined;
-  [MainAppNavigatorScreen.LOGIN]: undefined;
-  [MainAppNavigatorScreen.USER_PROFILE]: undefined;
-  [MainAppNavigatorScreen.FLY_DETAILS]: {
+  [AppScreen.HOME]: undefined;
+  [AppScreen.LOGIN]: undefined;
+  [AppScreen.USER_PROFILE]: undefined;
+  [AppScreen.FLY_DETAILS]: {
     id: Fly['id'];
   };
-  [MainAppNavigatorScreen.IMITATEE_DETAILS]: {
+  [AppScreen.IMITATEE_DETAILS]: {
     id: Imitatee['id'];
   };
 };

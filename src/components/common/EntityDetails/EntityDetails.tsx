@@ -5,6 +5,7 @@ import theme from '~/theme';
 import styles from '~/components/common/EntityDetails/styles';
 import ImageOrb from '~/components/common/ImageOrb/ImageOrb';
 import { ORB_IMAGE_SIZE } from '~/components/common/EntityDetails/constants';
+import FavouriteButton from '~/components/common/FavouriteButton/FavouriteButton';
 
 const EntityDetails: React.FC<Props> = props => (
   <View style={props.style}>
@@ -16,6 +17,15 @@ const EntityDetails: React.FC<Props> = props => (
           <Text style={[theme.typography.subtitleLarge, styles.subtitle]}>
             {props.subtitle}
           </Text>
+        ) : null}
+        {props.showFavouriteToggle && props.onToggleIsFavourite ? (
+          <View style={styles.actionButtonContainer}>
+            <FavouriteButton
+              isFavourite={props.isFavourite}
+              disabled={props.isLoading}
+              onPress={props.onToggleIsFavourite}
+            />
+          </View>
         ) : null}
       </View>
     </View>

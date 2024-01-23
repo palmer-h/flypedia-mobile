@@ -1,8 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
+import { AppScreen } from '~/core/constants';
 import { MainAppNavigatorScreenParams } from '~/navigators/MainAppNavigator/types';
 
 export type Props = NativeStackScreenProps<
   MainAppNavigatorScreenParams,
-  MainAppNavigatorScreen.FLY_DETAILS
+  AppScreen.FLY_DETAILS
 >;

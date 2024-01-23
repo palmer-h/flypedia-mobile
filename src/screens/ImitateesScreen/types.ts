@@ -3,12 +3,9 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { StackScreenProps } from '@react-navigation/stack';
 import { MainAppNavigatorScreenParams } from '~/navigators/MainAppNavigator/types';
 import { BottomTabsNavigatorScreenParams } from '~/navigators/BottomTabsNavigator/types';
-import { BottomTabsNavigatorScreen } from '~/navigators/BottomTabsNavigator/constants';
+import { AppScreen } from '~/core/constants';
 
 export type Props = CompositeScreenProps<
-  BottomTabScreenProps<
-    BottomTabsNavigatorScreenParams,
-    BottomTabsNavigatorScreen.IMITATEES
-  >,
+  BottomTabScreenProps<BottomTabsNavigatorScreenParams, AppScreen.IMITATEES>,
   StackScreenProps<MainAppNavigatorScreenParams>
 >;

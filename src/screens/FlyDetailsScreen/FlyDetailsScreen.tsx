@@ -5,13 +5,38 @@ import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import EntityDetails from '~/components/common/EntityDetails/EntityDetails';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
-import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
+import { AppScreen } from '~/core/constants';
+import { useReduxDispatch, useReduxSelector } from '~/hooks/redux';
+import { useToast } from '~/hooks/toast';
 import styles from '~/screens/FlyDetailsScreen/styles';
 import type { Props } from '~/screens/FlyDetailsScreen/types';
-import { useGetFlyByIdQuery } from '~/services/flypediaApi';
+import {
+  useGetFlyByIdQuery,
+  useAddFlyToUserFavouritesMutation,
+  useRemoveFlyFromUserFavouritesMutation,
+} from '~/services/flypediaApi';
+import {
+  addFlyToFavourites as addFlyToFavouritesReducer,
+  removeFlyFromFavourites as removeFlyFromFavouritesReducer,
+} from '~/store/slices/user';
 
 const FlyDetailsScreen: React.FC<Props> = props => {
+  const dispatch = useReduxDispatch();
+  const toast = useToast();
+
   const { data, error, isLoading } = useGetFlyByIdQuery(props.route.params.id);
+  const [addFlyToUserFavourites, { isLoading: isAddingFlyToUserFavourites }] =
+    useAddFlyToUserFavouritesMutation();
+  const [
+    removeFlyFromUserFavourites,
+    { isLoading: isRemovingFlyFromUserFavourites },
+  ] = useRemoveFlyFromUserFavouritesMutation();
+
+  const isLoggedIn = useReduxSelector(state => state.user.isLoggedIn);
+  const userId = useReduxSelector(state => state.user.id);
+  const userFavouriteFlies = useReduxSelector(
+    state => state.user.favouriteFlies,
+  );
 
   const imitateeCarouselItems: Array<EntityCarouselItem> =
     data?.imitatees?.map(x => ({
@@ -20,12 +45,47 @@ const FlyDetailsScreen: React.FC<Props> = props => {
     })) || [];
 
   const handlePressImitateeCarouselItem = (id: string): void => {
-    props.navigation.navigate(MainAppNavigatorScreen.IMITATEE_DETAILS, { id });
+    props.navigation.navigate(AppScreen.IMITATEE_DETAILS, { id });
   };
+
+  const handleToggleFlyIsFavourite = async (
+    isFavourite: boolean,
+  ): Promise<void> => {
+    let req;
+    let reducer;
+
+    if (isFavourite) {
+      req = addFlyToUserFavourites;
+      reducer = addFlyToFavouritesReducer;
+    } else {
+      req = removeFlyFromUserFavourites;
+      reducer = removeFlyFromFavouritesReducer;
+    }
+
+    if (!userId || !data) {
+      throw new Error('Oops...');
+    }
+
+    const res = await req({ userId, flyId: data.id });
+
+    if ('error' in res) {
+      toast.error(res.error.message);
+      return;
+    }
+
+    toast.success(
+      `Fly ${isFavourite ? 'added to' : 'removed from'} favourites`,
+    );
+    dispatch(reducer(data.id));
+  };
+
+  const flyIsFavourite: boolean = userFavouriteFlies
+    ? userFavouriteFlies.includes(props.route.params.id)
+    : false;
 
   if (error) {
     return 'status' in error ? (
-      <ErrorSplash status={error.status} message={error.data as string} />
+      <ErrorSplash status={error.status} message={error.message} />
     ) : (
       <ErrorSplash message={error.message} />
     );
@@ -43,6 +103,12 @@ const FlyDetailsScreen: React.FC<Props> = props => {
           subtitle={data?.types.map(x => x.name).join(', ')}
           style={styles.flyDetails}
           description={data.description}
+          showFavouriteToggle={isLoggedIn}
+          isFavourite={flyIsFavourite}
+          isLoading={
+            isAddingFlyToUserFavourites || isRemovingFlyFromUserFavourites
+          }
+          onToggleIsFavourite={handleToggleFlyIsFavourite}
         />
         {data.imitatees?.length ? (
           <EntityCarousel

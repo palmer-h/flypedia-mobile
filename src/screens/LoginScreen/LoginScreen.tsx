@@ -8,9 +8,11 @@ import { useLoginMutation } from '~/services/flypediaApi';
 import Button from '~/components/common/Button/Button';
 import { useReduxDispatch } from '~/hooks/redux';
 import { onLogin } from '~/store/slices/user';
+import { useToast } from '~/hooks/toast';
 
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useReduxDispatch();
+  const toast = useToast();
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -18,7 +20,6 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [emailError, setEmailError] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
-  const [formError, setFormError] = useState<string>('');
 
   const handleChangeEmailField = (val: string): void => {
     setEmailError('');
@@ -47,18 +48,19 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleSubmitForm = async (): Promise<void> => {
-    setFormError('');
-
     if (!validateForm()) {
       return;
     }
 
-    const res = (await login({ email, password })) as any;
+    const res = await login({ email, password });
+
     if (res.error) {
-      setFormError(res.error.data.message);
+      toast.error(res.error.message);
       return;
     }
+
     dispatch(onLogin(res.data));
+
     if (navigation.canGoBack()) {
       navigation.goBack();
     }
@@ -87,7 +89,6 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
           />
           <Text style={styles.inputError}>{passwordError}</Text>
         </View>
-        <Text style={styles.formError}>{formError}</Text>
         <View style={styles.buttonContainer}>
           <Button
             title="Login"

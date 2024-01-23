@@ -5,4 +5,7 @@ export type Props = {
   style?: ViewStyle | Array<ViewStyle>;
   accessibilityLabel?: string;
   accessibilityHint?: string;
+  isFavourite?: boolean;
+  disabled?: boolean;
+  onPress: (isFavourite: boolean) => void;
 };

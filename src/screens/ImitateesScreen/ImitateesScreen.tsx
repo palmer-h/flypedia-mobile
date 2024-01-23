@@ -7,7 +7,7 @@ import type { Props } from '~/screens/ImitateesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
-import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
+import { AppScreen } from '~/core/constants';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -38,7 +38,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         accessibilityLabel="imitatee card"
         accessibilityHint="press to view imitatee details"
         onPress={() =>
-          navigation.navigate(MainAppNavigatorScreen.IMITATEE_DETAILS, {
+          navigation.navigate(AppScreen.IMITATEE_DETAILS, {
             id: item.id,
           })
         }
@@ -56,7 +56,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
 
   if (error) {
     return 'status' in error ? (
-      <ErrorSplash status={error.status} message={error.data as string} />
+      <ErrorSplash status={error.status} message={error.message} />
     ) : (
       <ErrorSplash message={error.message} />
     );

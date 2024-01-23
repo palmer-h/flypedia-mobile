@@ -1,25 +1,29 @@
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { faChevronLeft, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import type { NavigationProp } from '@react-navigation/native';
 import BottomTabsNavigator from '~/navigators/BottomTabsNavigator/BottomTabsNavigator';
 import FlyDetailsScreen from '~/screens/FlyDetailsScreen/FlyDetailsScreen';
 import ImitateeDetailsScreen from '~/screens/ImitateeDetailsScreen/ImitateeDetailsScreen';
 import type { MainAppNavigatorScreenParams } from '~/navigators/MainAppNavigator/types';
 import IconButton from '~/components/common/IconButton/IconButton';
-import { faChevronLeft, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import type { NavigationProp } from '@react-navigation/native';
 import theme from '~/theme';
 import { useReduxSelector } from '~/hooks/redux';
 import LoginScreen from '~/screens/LoginScreen/LoginScreen';
 import {
   HEADER_BACK_BUTTON_ICON_SIZE,
   LOGIN_BUTTON_ICON_SIZE,
-  MainAppNavigatorScreen,
 } from '~/navigators/MainAppNavigator/constants';
 import * as keychain from '~/services/keychain';
 import { useReduxDispatch } from '~/hooks/redux';
 import { logout, setIsLoggedIn } from '~/store/slices/user';
 import UserProfileScreen from '~/screens/UserProfileScreen/UserProfileScreen';
+import {
+  ACCESS_TOKEN_KEYCHAIN_KEY,
+  AppScreen,
+  REFRESH_TOKEN_KEYCHAIN_KEY,
+} from '~/core/constants';
 
 const Stack = createStackNavigator<MainAppNavigatorScreenParams>();
 
@@ -49,11 +53,7 @@ const HeaderRight: React.FC<{
   const isLoggedIn = useReduxSelector(state => state.user.id);
 
   const handleIconPress = (): void => {
-    navigation.navigate(
-      !isLoggedIn
-        ? MainAppNavigatorScreen.LOGIN
-        : MainAppNavigatorScreen.USER_PROFILE,
-    );
+    navigation.navigate(!isLoggedIn ? AppScreen.LOGIN : AppScreen.USER_PROFILE);
   };
 
   return (
@@ -75,8 +75,12 @@ const MainAppNavigator = () => {
   const dispatch = useReduxDispatch();
 
   const checkLoggedInStatus = useCallback(async (): Promise<void> => {
-    const accessToken = await keychain.getSecureValue('accessToken');
-    const refreshToken = await keychain.getSecureValue('refreshToken');
+    const accessToken = await keychain.getSecureValue(
+      ACCESS_TOKEN_KEYCHAIN_KEY,
+    );
+    const refreshToken = await keychain.getSecureValue(
+      REFRESH_TOKEN_KEYCHAIN_KEY,
+    );
 
     if (!accessToken || !refreshToken) {
       await dispatch(logout());
@@ -102,21 +106,15 @@ const MainAppNavigator = () => {
           color: theme.colors.onPrimary,
         },
       })}>
+      <Stack.Screen name={AppScreen.HOME} component={BottomTabsNavigator} />
+      <Stack.Screen name={AppScreen.FLY_DETAILS} component={FlyDetailsScreen} />
       <Stack.Screen
-        name={MainAppNavigatorScreen.HOME}
-        component={BottomTabsNavigator}
-      />
-      <Stack.Screen
-        name={MainAppNavigatorScreen.FLY_DETAILS}
-        component={FlyDetailsScreen}
-      />
-      <Stack.Screen
-        name={MainAppNavigatorScreen.IMITATEE_DETAILS}
+        name={AppScreen.IMITATEE_DETAILS}
         component={ImitateeDetailsScreen}
       />
       {!isLoggedIn ? (
         <Stack.Screen
-          name={MainAppNavigatorScreen.LOGIN}
+          name={AppScreen.LOGIN}
           options={{
             headerRight: undefined,
           }}
@@ -124,7 +122,7 @@ const MainAppNavigator = () => {
         />
       ) : (
         <Stack.Screen
-          name={MainAppNavigatorScreen.USER_PROFILE}
+          name={AppScreen.USER_PROFILE}
           options={{
             headerRight: undefined,
           }}

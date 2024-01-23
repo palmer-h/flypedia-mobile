@@ -8,7 +8,7 @@ import styles from '~/screens/ImitateeDetailsScreen/styles';
 import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
-import { MainAppNavigatorScreen } from '~/navigators/MainAppNavigator/constants';
+import { AppScreen } from '~/core/constants';
 
 const ImitateeDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetImitateeByIdQuery(
@@ -22,12 +22,12 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
     })) || [];
 
   const handlePressFlyCarouselItem = (id: string): void => {
-    props.navigation.navigate(MainAppNavigatorScreen.FLY_DETAILS, { id });
+    props.navigation.navigate(AppScreen.FLY_DETAILS, { id });
   };
 
   if (error) {
     return 'status' in error ? (
-      <ErrorSplash status={error.status} message={error.data as string} />
+      <ErrorSplash status={error.status} message={error.message} />
     ) : (
       <ErrorSplash message={error.message} />
     );
@@ -47,7 +47,7 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
         />
         {data.flies?.length ? (
           <EntityCarousel
-            title="Imitates"
+            title="Imitate using"
             items={flyCarouselItems}
             onPressItem={handlePressFlyCarouselItem}
           />

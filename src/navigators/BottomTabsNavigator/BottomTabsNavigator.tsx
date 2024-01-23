@@ -8,8 +8,10 @@ import {
   TabBarIconProps,
 } from '~/navigators/BottomTabsNavigator/types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBug } from '@fortawesome/free-solid-svg-icons';
-import { BottomTabsNavigatorScreen } from '~/navigators/BottomTabsNavigator/constants';
+import { faBug, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useReduxSelector } from '~/hooks/redux';
+import UserFavouriteFliesScreen from '~/screens/UserFavouriteFliesScreen/UserFavouriteFliesScreen';
+import { AppScreen } from '~/core/constants';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
 
@@ -22,6 +24,8 @@ const TabBarIcon: React.FC<TabBarIconProps> = props => (
 );
 
 const BottomTabsNavigator = () => {
+  const isLoggedIn: boolean = useReduxSelector(state => state.user.isLoggedIn);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -41,19 +45,28 @@ const BottomTabsNavigator = () => {
         tabBarActiveTintColor: theme.colors.disabled,
       }}>
       <Tab.Screen
-        name={BottomTabsNavigatorScreen.FLIES}
+        name={AppScreen.FLIES}
         component={FliesScreen}
         options={{
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
         }}
       />
       <Tab.Screen
-        name={BottomTabsNavigatorScreen.IMITATEES}
+        name={AppScreen.IMITATEES}
         component={ImitateesScreen}
         options={{
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
         }}
       />
+      {isLoggedIn ? (
+        <Tab.Screen
+          name={AppScreen.USER_FAVOURITE_FLIES}
+          component={UserFavouriteFliesScreen}
+          options={{
+            tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faHeart }),
+          }}
+        />
+      ) : null}
     </Tab.Navigator>
   );
 };

@@ -4,4 +4,5 @@ export const INITIAL_USER_SLICE_STATE: UserSliceState = {
   isLoggedIn: false,
   id: null,
   email: null,
+  favouriteFlies: [],
 };

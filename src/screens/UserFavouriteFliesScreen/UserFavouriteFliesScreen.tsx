@@ -1,22 +1,31 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
-import { useIndexFliesQuery } from '~/services/flypediaApi';
+import { useIndexUserFavouriteFliesQuery } from '~/services/flypediaApi';
 import type { Fly } from '~/services/flypediaApi/types';
-import type { Props } from '~/screens/FliesScreen/types';
+import type { Props } from '~/screens/UserFavouriteFliesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
+import { useReduxSelector } from '~/hooks/redux';
 import { AppScreen } from '~/core/constants';
 
-const FliesScreen: React.FC<Props> = ({ navigation }) => {
+const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
+  const userId = useReduxSelector(state => state.user.id);
+
+  if (!userId) {
+    throw new Error('Oops...');
+  }
+
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const { data, error, isLoading, isFetching } = useIndexFliesQuery({
-    pageNumber,
-    pageSize: 10,
-  });
+  const { data, error, isLoading, isFetching } =
+    useIndexUserFavouriteFliesQuery({
+      pageNumber,
+      pageSize: 10,
+      userId,
+    });
 
   const handleListEndReached = (): void => {
     if (isFetching || !data || pageNumber >= data.metadata.totalPages) {
@@ -80,4 +89,4 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
   return null;
 };
 
-export default FliesScreen;
+export default UserFavouriteFliesScreen;

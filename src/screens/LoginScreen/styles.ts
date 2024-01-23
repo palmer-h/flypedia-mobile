@@ -22,11 +22,6 @@ export default StyleSheet.create({
     paddingTop: 4,
     color: theme.colors.error,
   },
-  formError: {
-    minHeight: 12,
-    marginBottom: 12,
-    color: theme.colors.error,
-  },
   buttonContainer: {
     marginTop: 8,
   },

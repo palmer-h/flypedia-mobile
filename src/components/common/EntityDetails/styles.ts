@@ -32,4 +32,7 @@ export default StyleSheet.create({
   descriptionTitleText: {
     marginBottom: 8,
   },
+  actionButtonContainer: {
+    paddingVertical: 12,
+  },
 });

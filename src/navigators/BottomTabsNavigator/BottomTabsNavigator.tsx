@@ -44,6 +44,15 @@ const BottomTabsNavigator = () => {
         tabBarInactiveTintColor: theme.colors.primary,
         tabBarActiveTintColor: theme.colors.disabled,
       }}>
+      {isLoggedIn ? (
+        <Tab.Screen
+          name={AppScreen.USER_FAVOURITE_FLIES}
+          component={UserFavouriteFliesScreen}
+          options={{
+            tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faHeart }),
+          }}
+        />
+      ) : null}
       <Tab.Screen
         name={AppScreen.FLIES}
         component={FliesScreen}
@@ -58,15 +67,6 @@ const BottomTabsNavigator = () => {
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
         }}
       />
-      {isLoggedIn ? (
-        <Tab.Screen
-          name={AppScreen.USER_FAVOURITE_FLIES}
-          component={UserFavouriteFliesScreen}
-          options={{
-            tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faHeart }),
-          }}
-        />
-      ) : null}
     </Tab.Navigator>
   );
 };

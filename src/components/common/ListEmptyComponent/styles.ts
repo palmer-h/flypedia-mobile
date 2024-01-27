@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   message: {
     color: theme.colors.text,
-    marginTop: 12,
+    marginTop: 16,
     ...theme.typography.bodyLarge,
   },
 });

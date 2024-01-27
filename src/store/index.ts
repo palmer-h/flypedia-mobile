@@ -9,8 +9,8 @@ import {
   REHYDRATE,
   persistReducer,
   persistStore,
+  type PersistConfig,
 } from 'redux-persist';
-import type { PersistConfig } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { flyApi } from '~/services/flypediaApi';
 import user from '~/store/slices/user';
@@ -23,7 +23,7 @@ const reducer = combineReducers({
 const persistConfig: PersistConfig<any> = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: [],
+  blacklist: [flyApi.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

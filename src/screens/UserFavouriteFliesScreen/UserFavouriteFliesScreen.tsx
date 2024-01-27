@@ -21,11 +21,14 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   const { data, error, isLoading, isFetching } =
-    useIndexUserFavouriteFliesQuery({
-      pageNumber,
-      pageSize: 10,
-      userId,
-    });
+    useIndexUserFavouriteFliesQuery(
+      {
+        pageNumber,
+        pageSize: 20,
+        userId,
+      },
+      { refetchOnFocus: true },
+    );
 
   const handleListEndReached = (): void => {
     if (isFetching || !data || pageNumber >= data.metadata.totalPages) {

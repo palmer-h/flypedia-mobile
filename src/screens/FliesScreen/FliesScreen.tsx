@@ -7,7 +7,6 @@ import type { Props } from '~/screens/FliesScreen/types';
 import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmptyComponent';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
-import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
 import { AppScreen } from '~/core/constants';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
@@ -15,7 +14,7 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
 
   const { data, error, isLoading, isFetching } = useIndexFliesQuery({
     pageNumber,
-    pageSize: 10,
+    pageSize: 20,
   });
 
   const handleListEndReached = (): void => {
@@ -66,11 +65,6 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         onEndReached={handleListEndReached}
-        getItemLayout={(_data, index) => ({
-          length: CONTAINER_HEIGHT,
-          offset: 0,
-          index,
-        })}
         ListEmptyComponent={ListEmptyStateComponent}
         ListFooterComponent={isFetching ? ActivityIndicator : undefined}
       />

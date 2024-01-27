@@ -8,15 +8,17 @@ import styles from '~/components/common/ErrorSplash/styles';
 
 const ErrorSplash: React.FC<Props> = props => (
   <View style={styles.container}>
-    <FontAwesomeIcon
-      icon={faChainBroken}
-      size={64}
-      color={theme.colors.primary}
-    />
-    {props.status ? <Text style={styles.status}>{props.status}</Text> : null}
-    <Text style={styles.message}>
-      {props.message || 'Oops, something went wrong'}
-    </Text>
+    <View style={styles.contentContainer}>
+      <FontAwesomeIcon
+        icon={faChainBroken}
+        size={64}
+        color={theme.colors.primary}
+      />
+      {props.status ? <Text style={styles.status}>{props.status}</Text> : null}
+      <Text style={styles.message}>
+        {props.message || 'Oops, something went wrong'}
+      </Text>
+    </View>
   </View>
 );
 

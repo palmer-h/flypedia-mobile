@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexFliesQuery } from '~/services/flypediaApi';
 import type { Fly } from '~/services/flypediaApi/types';
@@ -10,19 +10,10 @@ import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { AppScreen } from '~/core/constants';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
   const { data, error, isLoading, isFetching } = useIndexFliesQuery({
-    pageNumber,
-    pageSize: 20,
+    pageNumber: 1,
+    pageSize: 999,
   });
-
-  const handleListEndReached = (): void => {
-    if (isFetching || !data || pageNumber >= data.metadata.totalPages) {
-      return;
-    }
-    setPageNumber(pageNumber + 1);
-  };
 
   const renderItem = ({ item }: { item: Fly }) => (
     <OrbCardListItem
@@ -54,7 +45,7 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingSplash />;
   }
 
@@ -64,9 +55,7 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        onEndReached={handleListEndReached}
         ListEmptyComponent={ListEmptyStateComponent}
-        ListFooterComponent={isFetching ? ActivityIndicator : undefined}
       />
     );
   }

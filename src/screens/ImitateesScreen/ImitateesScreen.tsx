@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexImitateesQuery } from '~/services/flypediaApi';
@@ -10,23 +10,10 @@ import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { AppScreen } from '~/core/constants';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
   const { data, error, isLoading, isFetching } = useIndexImitateesQuery({
-    pageNumber,
-    pageSize: 20,
+    pageNumber: 1,
+    pageSize: 999,
   });
-
-  const handleListEndReached = (): void => {
-    if (!data || pageNumber >= data.metadata.totalPages) {
-      return;
-    }
-    setPageNumber(pageNumber + 1);
-  };
-
-  const handleRefresh = (): void => {
-    setPageNumber(1);
-  };
 
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
@@ -62,7 +49,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingSplash />;
   }
 
@@ -72,10 +59,7 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        refreshing={isFetching}
-        onRefresh={handleRefresh}
         ListEmptyComponent={ListEmptyStateComponent}
-        onEndReached={handleListEndReached}
       />
     );
   }

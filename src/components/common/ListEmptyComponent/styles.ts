@@ -3,12 +3,16 @@ import theme from '~/theme';
 
 export default StyleSheet.create({
   container: {
-    marginVertical: 32,
+    flex: 1,
+  },
+  contentContainer: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
     alignItems: 'center',
   },
   message: {
     color: theme.colors.text,
-    marginTop: 16,
+    marginTop: 20,
     ...theme.typography.bodyLarge,
   },
 });

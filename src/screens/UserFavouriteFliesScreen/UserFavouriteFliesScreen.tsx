@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexUserFavouriteFliesQuery } from '~/services/flypediaApi';
 import type { Fly } from '~/services/flypediaApi/types';
@@ -10,6 +10,8 @@ import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
 import { useReduxSelector } from '~/hooks/redux';
 import { AppScreen } from '~/core/constants';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { EMPTY_STATE_MSG } from '~/screens/UserFavouriteFliesScreen/constants';
 
 const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   const userId = useReduxSelector(state => state.user.id);
@@ -18,24 +20,15 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
     throw new Error('Oops...');
   }
 
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
   const { data, error, isLoading, isFetching } =
     useIndexUserFavouriteFliesQuery(
       {
-        pageNumber,
-        pageSize: 20,
+        pageNumber: 1,
+        pageSize: 999,
         userId,
       },
       { refetchOnFocus: true },
     );
-
-  const handleListEndReached = (): void => {
-    if (isFetching || !data || pageNumber >= data.metadata.totalPages) {
-      return;
-    }
-    setPageNumber(pageNumber + 1);
-  };
 
   const renderItem = ({ item }: { item: Fly }) => (
     <OrbCardListItem
@@ -53,7 +46,7 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   const ListEmptyStateComponent = useCallback(
-    () => <ListEmptyComponent message="No flies found" />,
+    () => <ListEmptyComponent message={EMPTY_STATE_MSG} icon={faHeart} />,
     [],
   );
 
@@ -67,7 +60,7 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingSplash />;
   }
 
@@ -77,14 +70,13 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
         data={data.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        onEndReached={handleListEndReached}
         getItemLayout={(_data, index) => ({
           length: CONTAINER_HEIGHT,
           offset: 0,
           index,
         })}
+        contentContainerStyle={{ height: '100%' }}
         ListEmptyComponent={ListEmptyStateComponent}
-        ListFooterComponent={isFetching ? ActivityIndicator : undefined}
       />
     );
   }

@@ -9,11 +9,15 @@ export type Fly = {
   description: string;
   types: Array<FlyType>;
   imitatees?: Array<Imitatee>;
+  updatedAt: string;
+  createdAt: string;
 };
 
 export type FlyType = {
   id: string;
   name: string;
+  updatedAt: string;
+  createdAt: string;
 };
 
 export type Imitatee = {
@@ -21,6 +25,8 @@ export type Imitatee = {
   name: string;
   description: string;
   flies?: Array<Fly>;
+  updatedAt: string;
+  createdAt: string;
 };
 
 export type LoginPayload = {

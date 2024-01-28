@@ -9,6 +9,7 @@ import { EntityCarouselItem } from '~/components/common/EntityCarousel/types';
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { AppScreen } from '~/core/constants';
+import { FLIES_CAROUSEL_TITLE } from '~/screens/ImitateeDetailsScreen/constants';
 
 const ImitateeDetailsScreen: React.FC<Props> = props => {
   const { data, error, isLoading } = useGetImitateeByIdQuery(
@@ -44,10 +45,11 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
           title={data.name}
           description={data.description}
           style={styles.imitateeDetails}
+          updatedAt={data.updatedAt}
         />
         {data.flies?.length ? (
           <EntityCarousel
-            title="Imitate using"
+            title={FLIES_CAROUSEL_TITLE}
             items={flyCarouselItems}
             onPressItem={handlePressFlyCarouselItem}
           />

@@ -27,7 +27,11 @@ const IconButton: React.FC<Props> = props => (
     <FontAwesomeIcon
       icon={props.icon}
       size={props.size}
-      color={props.iconColor || theme.colors.onPrimary}
+      color={
+        props.disabled
+          ? theme.colors.disabled
+          : props.iconColor || theme.colors.onPrimary
+      }
     />
   </Pressable>
 );

@@ -19,6 +19,7 @@ import {
   addFlyToFavourites as addFlyToFavouritesReducer,
   removeFlyFromFavourites as removeFlyFromFavouritesReducer,
 } from '~/store/slices/user';
+import { IMITATEES_CAROUSEL_TITLE } from '~/screens/FlyDetailsScreen/constants';
 
 const FlyDetailsScreen: React.FC<Props> = props => {
   const dispatch = useReduxDispatch();
@@ -105,6 +106,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
           description={data.description}
           showFavouriteToggle={isLoggedIn}
           isFavourite={flyIsFavourite}
+          updatedAt={data.updatedAt}
           isLoading={
             isAddingFlyToUserFavourites || isRemovingFlyFromUserFavourites
           }
@@ -112,7 +114,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
         />
         {data.imitatees?.length ? (
           <EntityCarousel
-            title="Imitates"
+            title={IMITATEES_CAROUSEL_TITLE}
             items={imitateeCarouselItems}
             onPressItem={handlePressImitateeCarouselItem}
           />

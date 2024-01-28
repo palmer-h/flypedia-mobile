@@ -26,7 +26,9 @@ export default StyleSheet.create({
     marginVertical: 12,
   },
   titleText: {
-    ...theme.typography.titleLarge,
+    ...theme.typography.titleExtraLarge,
+    textAlign: 'center',
+    paddingHorizontal: 8,
     color: theme.colors.primary,
   },
   descriptionTitleText: {

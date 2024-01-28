@@ -43,16 +43,16 @@ export const subtitleMedium: TextStyle = {
 
 export const bodyLarge: TextStyle = {
   ...base,
-  fontSize: 18,
+  fontSize: 20,
   fontWeight: '400',
 };
 export const bodyMedium: TextStyle = {
   ...base,
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: '400',
 };
 export const bodySmall: TextStyle = {
   ...base,
-  fontSize: 14,
+  fontSize: 16,
   fontWeight: '400',
 };

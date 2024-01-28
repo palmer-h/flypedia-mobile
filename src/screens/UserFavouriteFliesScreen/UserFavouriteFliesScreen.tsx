@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexUserFavouriteFliesQuery } from '~/services/flypediaApi';
@@ -12,9 +12,13 @@ import { useReduxSelector } from '~/hooks/redux';
 import { AppScreen } from '~/core/constants';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { EMPTY_STATE_MSG } from '~/screens/UserFavouriteFliesScreen/constants';
+import PaginationControls from '~/components/common/PaginationControls/PaginationControls';
+import { DEFAULT_ENTITY_PAGE_SIZE } from '~/services/flypediaApi/constants';
 
 const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   const userId = useReduxSelector(state => state.user.id);
+
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   if (!userId) {
     throw new Error('Oops...');
@@ -23,11 +27,11 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   const { data, error, isLoading, isFetching } =
     useIndexUserFavouriteFliesQuery(
       {
-        pageNumber: 1,
-        pageSize: 999,
+        pageNumber,
+        pageSize: DEFAULT_ENTITY_PAGE_SIZE,
         userId,
       },
-      { refetchOnFocus: true },
+      { refetchOnReconnect: true },
     );
 
   const renderItem = ({ item }: { item: Fly }) => (
@@ -51,6 +55,10 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   const keyExtractor = (item: Fly): string => String(item.id);
+
+  const handlePaginationControlsAction = (page: number): void => {
+    setPageNumber(page);
+  };
 
   if (error) {
     return 'status' in error ? (
@@ -77,6 +85,13 @@ const UserFavouriteFliesScreen: React.FC<Props> = ({ navigation }) => {
         })}
         contentContainerStyle={{ height: '100%' }}
         ListEmptyComponent={ListEmptyStateComponent}
+        ListFooterComponent={
+          <PaginationControls
+            pageNumber={pageNumber}
+            totalPages={data.metadata.totalPages || 0}
+            onGoToPage={handlePaginationControlsAction}
+          />
+        }
       />
     );
   }

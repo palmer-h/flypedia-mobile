@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 import OrbCardListItem from '~/components/common/OrbCardListItem/OrbCardListItem';
 import { useIndexFliesQuery } from '~/services/flypediaApi';
@@ -8,12 +8,18 @@ import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmpty
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { AppScreen } from '~/core/constants';
+import PaginationControls from '~/components/common/PaginationControls/PaginationControls';
 
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
-  const { data, error, isLoading, isFetching } = useIndexFliesQuery({
-    pageNumber: 1,
-    pageSize: 999,
-  });
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const { data, error, isLoading, isFetching } = useIndexFliesQuery(
+    {
+      pageNumber,
+      pageSize: 30,
+    },
+    { refetchOnReconnect: true },
+  );
 
   const renderItem = ({ item }: { item: Fly }) => (
     <OrbCardListItem
@@ -37,6 +43,10 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
 
   const keyExtractor = (item: Fly): string => String(item.id);
 
+  const handlePaginationControlsAction = (page: number): void => {
+    setPageNumber(page);
+  };
+
   if (error) {
     return 'status' in error ? (
       <ErrorSplash status={error.status} message={error.message} />
@@ -51,12 +61,21 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
 
   if (data) {
     return (
-      <FlatList
-        data={data.results}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        ListEmptyComponent={ListEmptyStateComponent}
-      />
+      <React.Fragment>
+        <FlatList
+          data={data.results}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          ListEmptyComponent={ListEmptyStateComponent}
+          ListFooterComponent={
+            <PaginationControls
+              pageNumber={pageNumber}
+              totalPages={data.metadata.totalPages}
+              onGoToPage={handlePaginationControlsAction}
+            />
+          }
+        />
+      </React.Fragment>
     );
   }
 

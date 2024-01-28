@@ -25,7 +25,7 @@ const OrbCardListItem: React.FC<Props> = memo(props => (
       ) : null}
       <Text
         style={[theme.typography.bodySmall, styles.descriptionText]}
-        numberOfLines={2}>
+        numberOfLines={1}>
         {props.desc}
       </Text>
     </View>

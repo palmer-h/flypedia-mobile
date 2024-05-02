@@ -47,6 +47,7 @@ const HeaderLeft: React.FC<{
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const HeaderRight: React.FC<{
   navigation: NavigationProp<MainAppNavigatorScreenParams>;
 }> = ({ navigation }) => {
@@ -97,7 +98,6 @@ const MainAppNavigator = () => {
     <Stack.Navigator
       screenOptions={({ navigation, route }) => ({
         headerLeft: () => HeaderLeft({ navigation }),
-        headerRight: () => HeaderRight({ navigation }),
         headerTitle: !navigation.canGoBack() ? 'Flypedia' : route.name,
         headerStyle: {
           backgroundColor: theme.colors.primary,

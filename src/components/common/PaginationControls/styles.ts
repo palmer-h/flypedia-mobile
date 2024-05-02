@@ -8,6 +8,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     backgroundColor: theme.colors.background,
+    borderTopWidth: 2,
+    borderTopColor: theme.colors.primary,
   },
   pageNumberText: {
     ...theme.typography.bodyLarge,

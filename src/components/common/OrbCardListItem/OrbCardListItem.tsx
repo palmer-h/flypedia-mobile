@@ -4,7 +4,6 @@ import type { Props } from '~/components/common/OrbCardListItem/types';
 import theme from '~/theme';
 import styles from '~/components/common/OrbCardListItem/styles';
 import ImageOrb from '../ImageOrb/ImageOrb';
-import colors from '~/theme/colors';
 
 const OrbCardListItem: React.FC<Props> = memo(props => (
   <Pressable
@@ -12,7 +11,9 @@ const OrbCardListItem: React.FC<Props> = memo(props => (
       styles.container,
       props.style,
       {
-        backgroundColor: pressed ? colors.pressed : colors.background,
+        backgroundColor: pressed
+          ? theme.colors.pressed
+          : theme.colors.background,
       },
     ]}
     accessibilityLabel={props.accessibilityLabel}

@@ -116,6 +116,7 @@ const FlyDetailsScreen: React.FC<Props> = props => {
           <EntityCarousel
             title={IMITATEES_CAROUSEL_TITLE}
             items={imitateeCarouselItems}
+            fallbackImg={require('~/assets/imitateePlaceholder.png')}
             onPressItem={handlePressImitateeCarouselItem}
           />
         ) : null}

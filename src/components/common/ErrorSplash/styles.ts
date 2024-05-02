@@ -20,4 +20,7 @@ export default StyleSheet.create({
     marginTop: 12,
     ...theme.typography.bodyLarge,
   },
+  refreshButton: {
+    marginTop: 20,
+  },
 });

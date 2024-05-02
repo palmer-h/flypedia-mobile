@@ -67,7 +67,7 @@ export type Metadata = {
 
 export type PaginatedEntityIndexParams = {
   pageNumber: Metadata['pageNumber'];
-  pageSize: Metadata['pageSize'];
+  pageSize?: Metadata['pageSize'];
   ids?: Array<number | string>;
 };
 

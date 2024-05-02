@@ -45,6 +45,7 @@ const ImitateeDetailsScreen: React.FC<Props> = props => {
           title={data.name}
           description={data.description}
           style={styles.imitateeDetails}
+          img={require('~/assets/imitateePlaceholder.png')}
           updatedAt={data.updatedAt}
         />
         {data.flies?.length ? (

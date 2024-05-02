@@ -14,7 +14,12 @@ import { format } from 'date-fns';
 const EntityDetails: React.FC<Props> = props => (
   <View style={props.style}>
     <View style={styles.mainDetailsContainer}>
-      <ImageOrb size={ORB_IMAGE_SIZE} style={styles.imageOrb} shadow={true} />
+      <ImageOrb
+        size={ORB_IMAGE_SIZE}
+        style={styles.imageOrb}
+        shadow={true}
+        imgSrc={props.img}
+      />
       <View style={styles.mainDetailsTitleContainer}>
         <Text style={styles.titleText}>{props.title}</Text>
         {props.subtitle ? (

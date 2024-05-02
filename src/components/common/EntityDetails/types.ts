@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { ImageSourcePropType, ViewStyle } from 'react-native';
 
 export type Props = {
   title: string;
@@ -9,5 +9,6 @@ export type Props = {
   isFavourite?: boolean;
   isLoading?: boolean;
   showFavouriteToggle?: boolean;
+  img?: ImageSourcePropType;
   onToggleIsFavourite?: (isFavourite: boolean) => void;
 };

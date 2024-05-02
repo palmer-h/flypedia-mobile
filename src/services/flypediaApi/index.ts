@@ -4,6 +4,7 @@ import {
   type BaseQueryFn,
   type FetchArgs,
   type FetchBaseQueryError,
+  FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 import {
   ACCESS_TOKEN_KEYCHAIN_KEY,
@@ -25,12 +26,17 @@ import { logout, setIsLoggedIn } from '~/store/slices/user';
 import {
   ACCESS_TOKEN_EXPIRED_HEADER_KEY,
   ACCESS_TOKEN_EXPIRED_HEADER_VALUE,
+  BASE_URL,
+  DEFAULT_ENTITY_PAGE_SIZE,
+  TIMEOUT_MS,
   TagType,
 } from '~/services/flypediaApi/constants';
 import { RootState } from '~/store';
+import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://192.168.1.238:3000/api/v1/',
+  baseUrl: BASE_URL,
+  timeout: TIMEOUT_MS,
   prepareHeaders: async headers => {
     const token: string | false = await keychain.getSecureValue(
       ACCESS_TOKEN_KEYCHAIN_KEY,
@@ -51,6 +57,8 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   try {
     let result = await baseQuery(args, api, extraOptions);
+
+    console.log(result);
 
     if (!result.error || result.error.status !== 401) {
       return result;
@@ -77,7 +85,11 @@ const baseQueryWithReauth: BaseQueryFn<
         return result;
       }
 
-      const refreshResult = await baseQuery(
+      const refreshResult: QueryReturnValue<
+        any,
+        FetchBaseQueryError,
+        FetchBaseQueryMeta
+      > = await baseQuery(
         {
           url: 'auth/refresh',
           method: 'POST',
@@ -155,9 +167,7 @@ export const flyApi = createApi({
         currentCache.metadata = newData.metadata;
         currentCache.results = newData.results;
       },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg !== previousArg,
     }),
     addFlyToUserFavourites: builder.mutation<
       string,
@@ -188,16 +198,16 @@ export const flyApi = createApi({
       PaginatedEntityIndexParams
     >({
       query: config =>
-        `flies?pageNumber=${config.pageNumber}&pageSize=${config.pageSize}`,
+        `flies?pageNumber=${config.pageNumber}&pageSize=${
+          config.pageSize || DEFAULT_ENTITY_PAGE_SIZE
+        }`,
       transformErrorResponse,
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCache, newData) => {
         currentCache.metadata = newData.metadata;
         currentCache.results = newData.results;
       },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg !== previousArg,
     }),
     getFlyById: builder.query<Fly, Fly['id']>({
       query: id => `flies/${id}`,
@@ -210,16 +220,16 @@ export const flyApi = createApi({
       PaginatedEntityIndexParams
     >({
       query: config =>
-        `imitatees?pageNumber=${config.pageNumber}&pageSize=${config.pageSize}`,
+        `imitatees?pageNumber=${config.pageNumber}&pageSize=${
+          config.pageSize || DEFAULT_ENTITY_PAGE_SIZE
+        }`,
       transformErrorResponse,
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCache, newData) => {
         currentCache.metadata = newData.metadata;
         currentCache.results = newData.results;
       },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg !== previousArg,
     }),
     getImitateeById: builder.query<Imitatee, Imitatee['id']>({
       query: id => `imitatees/${id}`,

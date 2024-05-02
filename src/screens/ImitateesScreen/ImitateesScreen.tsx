@@ -8,20 +8,14 @@ import ListEmptyComponent from '~/components/common/ListEmptyComponent/ListEmpty
 import ErrorSplash from '~/components/common/ErrorSplash/ErrorSplash';
 import LoadingSplash from '~/components/common/LoadingSplash/LoadingSplash';
 import { AppScreen } from '~/core/constants';
-import { DEFAULT_ENTITY_PAGE_SIZE } from '~/services/flypediaApi/constants';
 import { CONTAINER_HEIGHT } from '~/components/common/OrbCardListItem/constants';
 import PaginationControls from '~/components/common/PaginationControls/PaginationControls';
 
 const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const { data, error, isLoading, isFetching } = useIndexImitateesQuery(
-    {
-      pageNumber,
-      pageSize: DEFAULT_ENTITY_PAGE_SIZE,
-    },
-    { refetchOnReconnect: true },
-  );
+  const { data, error, isLoading, isFetching, refetch } =
+    useIndexImitateesQuery({ pageNumber }, { refetchOnReconnect: true });
 
   const renderItem = useCallback(
     ({ item }: { item: Imitatee }) => (
@@ -53,11 +47,15 @@ const ImitateesScreen: React.FC<Props> = ({ navigation }) => {
     setPageNumber(page);
   };
 
-  if (error) {
+  if (error && !isFetching) {
     return 'status' in error ? (
-      <ErrorSplash status={error.status} message={error.message} />
+      <ErrorSplash
+        status={error.status}
+        message={error.message}
+        onRetry={refetch}
+      />
     ) : (
-      <ErrorSplash message={error.message} />
+      <ErrorSplash message={error.message} onRetry={refetch} />
     );
   }
 

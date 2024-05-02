@@ -13,11 +13,8 @@ import PaginationControls from '~/components/common/PaginationControls/Paginatio
 const FliesScreen: React.FC<Props> = ({ navigation }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const { data, error, isLoading, isFetching } = useIndexFliesQuery(
-    {
-      pageNumber,
-      pageSize: 30,
-    },
+  const { data, error, isLoading, isFetching, refetch } = useIndexFliesQuery(
+    { pageNumber },
     { refetchOnReconnect: true },
   );
 
@@ -47,11 +44,15 @@ const FliesScreen: React.FC<Props> = ({ navigation }) => {
     setPageNumber(page);
   };
 
-  if (error) {
+  if (error && !isFetching) {
     return 'status' in error ? (
-      <ErrorSplash status={error.status} message={error.message} />
+      <ErrorSplash
+        status={error.status}
+        message={error.message}
+        onRetry={refetch}
+      />
     ) : (
-      <ErrorSplash message={error.message} />
+      <ErrorSplash message={error.message} onRetry={refetch} />
     );
   }
 

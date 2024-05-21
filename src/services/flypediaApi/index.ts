@@ -58,8 +58,6 @@ const baseQueryWithReauth: BaseQueryFn<
   try {
     let result = await baseQuery(args, api, extraOptions);
 
-    console.log(result);
-
     if (!result.error || result.error.status !== 401) {
       return result;
     }

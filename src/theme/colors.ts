@@ -10,4 +10,5 @@ export default {
   onError: '#FEFCFF',
   success: 'green',
   onSuccess: '#FEFCFF',
+  link: '#0047AB',
 };

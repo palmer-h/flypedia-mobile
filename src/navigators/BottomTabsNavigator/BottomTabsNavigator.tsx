@@ -8,10 +8,16 @@ import {
   TabBarIconProps,
 } from '~/navigators/BottomTabsNavigator/types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBug, faFish, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBug,
+  faFish,
+  faHeart,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { useReduxSelector } from '~/hooks/redux';
 import UserFavouriteFliesScreen from '~/screens/UserFavouriteFliesScreen/UserFavouriteFliesScreen';
 import { AppScreen } from '~/core/constants';
+import AboutAppScreen from '~/screens/AboutAppScreen/AboutAppScreen';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorScreenParams>();
 
@@ -33,8 +39,8 @@ const BottomTabsNavigator = () => {
         tabBarStyle: {
           backgroundColor: theme.colors.background,
           height: 72,
-          borderTopWidth: 1.5,
-          borderTopColor: theme.colors.primary,
+          borderTopWidth: 0,
+          elevation: 0,
         },
         tabBarLabelStyle: {
           fontSize: 15,
@@ -66,6 +72,14 @@ const BottomTabsNavigator = () => {
         component={ImitateesScreen}
         options={{
           tabBarIcon: ({ focused }) => TabBarIcon({ focused, icon: faBug }),
+        }}
+      />
+      <Tab.Screen
+        name={AppScreen.ABOUT_APP}
+        component={AboutAppScreen}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            TabBarIcon({ focused, icon: faInfoCircle }),
         }}
       />
     </Tab.Navigator>

@@ -5,6 +5,7 @@ export type BottomTabsNavigatorScreenParams = {
   [AppScreen.FLIES]: undefined;
   [AppScreen.IMITATEES]: undefined;
   [AppScreen.USER_FAVOURITE_FLIES]: undefined;
+  [AppScreen.ABOUT_APP]: undefined;
 };
 
 export type TabBarIconProps = {

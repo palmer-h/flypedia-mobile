@@ -2,9 +2,7 @@ export default {
   primary: '#647687',
   onPrimary: 'white',
   pressedPrimary: '#BBC7CE',
-  secondary: '#8fba8f',
-  onSecondary: '',
-  text: 'black',
+  text: '#21272d',
   background: '#FEFCFF',
   disabled: 'lightgrey',
   pressed: '#EBEBEB',
@@ -12,4 +10,5 @@ export default {
   onError: '#FEFCFF',
   success: 'green',
   onSuccess: '#FEFCFF',
+  link: '#0047AB',
 };

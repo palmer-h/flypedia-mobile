@@ -10,4 +10,5 @@ export enum AppScreen {
   USER_FAVOURITE_FLIES = 'Favourites',
   FLY_DETAILS = 'Fly',
   IMITATEE_DETAILS = 'Imitatee',
+  ABOUT_APP = 'About',
 }
